@@ -42,8 +42,13 @@
     LC_TIME = "ar_EG.UTF-8";
   };
 
-   # Whether to enable XWayland
-   xwayland.enable = true;
+  {
+    programs.hyprland = {
+      # Install the packages from nixpkgs
+      enable = true;
+      # Whether to enable XWayland
+      xwayland.enable = true;
+    };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
