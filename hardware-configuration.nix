@@ -90,5 +90,7 @@ services.blueman.enable = true;
       bluez-tools
       bluez-alsa
       bluez5-experimental
+      android-tools
+      android-udev-rules
    ];
 }

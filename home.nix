@@ -153,6 +153,8 @@ gtk = {
       unalias neofetch
       alias neofetch-big='neofetch --ascii ~/.config/neofetch/cat.txt | lolcat'
       alias neofetch-small='neofetch --ascii ~/.config/neofetch/cat2.txt | lolcat'
+      alias clean-nix="sudo nix-collect-garbage -d && sudo nixos-rebuild boot"
+      alias update-nix="sudo nixos-rebuild switch"
       #alias neofetch='${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat.txt | ${pkgs.lolcat}/bin/lolcat'
       #alias neofetch-small='${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat2.txt | ${pkgs.lolcat}/bin/lolcat' 
    '';

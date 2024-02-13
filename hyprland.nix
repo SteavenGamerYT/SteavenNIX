@@ -17,9 +17,10 @@
     extraConfig = ''
     # Monitor
 #   monitor=DP-1,1920x1080@165,auto,1
-#    monitor=,preferred,auto,1
-   monitor=,highres,auto,1
-    # Fix slow startup
+    monitor=,preferred,auto,1
+#   monitor=,highres,auto,1
+#   monitor=DP-1,1920x1080@60,0x0,1,mirror,DVI-D-1
+   # Fix slow startup
     exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP 
 

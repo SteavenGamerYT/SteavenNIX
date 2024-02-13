@@ -124,6 +124,9 @@ environment.sessionVariables = {
   WLR_NO_HARDWARE_CURSORS = "1";
   NIXOS_OZONE_WL = "1";
   SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
+  __GL_SHADER_DISK_CACHE = "1";
+  __GL_SHADER_DISK_CACHE_SIZE = "100000000000";
+  __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
 };
 
   # Enable CUPS to print documents.
@@ -264,7 +267,10 @@ environment.sessionVariables = {
   unityhub
   warp
   upscayl
-  
+  parsec-bin
+  mangohud
+  gamescope
+  goverlay
 ];
 fonts.packages = with pkgs; [
   (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
