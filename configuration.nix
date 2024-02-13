@@ -271,6 +271,7 @@ environment.sessionVariables = {
   mangohud
   gamescope
   goverlay
+  gimp-with-plugins
 ];
 fonts.packages = with pkgs; [
   (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
