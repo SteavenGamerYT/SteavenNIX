@@ -23,76 +23,67 @@
   #     xxx
   # '';
 
-wayland.windowManager.hyprland.systemd.enable = true;
-# Themes
-gtk = {
-        enable = true;
+  wayland.windowManager.hyprland.systemd.enable = true;
+  # Themes
+  gtk = {
+    enable = true;
+    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+    theme.name = "Nordic";
+    theme.package = pkgs.nordic;
+    iconTheme.name = "Papirus";
+    iconTheme.package = pkgs.papirus-icon-theme;
+    cursorTheme.name = "WhiteSur-cursors";
+    cursorTheme.package = pkgs.whitesur-cursors;
+    font.name = "Roboto";
+    font.package = pkgs.roboto;
+  };
+  qt = {
+    enable = true;
+    platformTheme = "qtct";
+    style.name = "kvantum-dark";
+    style.package = pkgs.libsForQt5.qtstyleplugin-kvantum;
+  };
 
-        gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
-        
-        theme.name = "Nordic";
-        theme.package = pkgs.nordic;
-
-        iconTheme.name = "Papirus";
-        iconTheme.package = pkgs.papirus-icon-theme;
-
-        cursorTheme.name = "WhiteSur-cursors";
-        cursorTheme.package = pkgs.whitesur-cursors;
-        font.name = "Roboto";
-        font.package = pkgs.roboto;
-    };
-    
-    qt = {
-        enable = true;
-        platformTheme = "qtct";
-       
-        style.name = "kvantum-dark";
-        style.package = pkgs.libsForQt5.qtstyleplugin-kvantum;
-      };
-
-
-  # set cursor size and dpi for 4k monitor
   xresources.properties = {
-   "Xcursor.size" = 16;
+    "Xcursor.size" = 16;
     "Xft.dpi" = 24;
   };
 
-xdg.mimeApps = {
-  enable = true;
-  defaultApplications = {
-    "text/html" = "google-chrome.desktop";
-    "x-scheme-handler/http" = "google-chrome.desktop";
-    "x-scheme-handler/https" = "google-chrome.desktop";
-    "x-scheme-handler/about" = "google-chrome.desktop";
-    "x-scheme-handler/unknown" = "google-chrome.desktop";
-    "inode/directory" = "nemo.desktop";
-    "application/x-gnome-saved-search" = "nemo.desktop";
-    "application/x-shellscript" = "org.kde.konsole.desktop";
-    "video/mp4" = "mpv.desktop";
-    "video/quicktime" = "mpv.desktop"; # mov
-    "video/x-matroska" = "mpv.desktop"; # mkv
-    "audio/mpeg" = "mpv.desktop";
-    "audio/x-wav" = "mpv.desktop";
-    "audio/mp3" = "mpv.desktop";
-    "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
-    "x-scheme-handler/magnet" = "org.qbittorrent.qBittorrent.desktop";
-    "text/plain" = "org.kde.kate.desktop";
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "google-chrome.desktop";
+      "x-scheme-handler/http" = "google-chrome.desktop";
+      "x-scheme-handler/https" = "google-chrome.desktop";
+      "x-scheme-handler/about" = "google-chrome.desktop";
+      "x-scheme-handler/unknown" = "google-chrome.desktop";
+      "inode/directory" = "nemo.desktop";
+      "application/x-gnome-saved-search" = "nemo.desktop";
+      "application/x-shellscript" = "org.kde.konsole.desktop";
+      "video/mp4" = "mpv.desktop";
+      "video/quicktime" = "mpv.desktop"; # mov
+      "video/x-matroska" = "mpv.desktop"; # mkv
+      "audio/mpeg" = "mpv.desktop";
+      "audio/x-wav" = "mpv.desktop";
+      "audio/mp3" = "mpv.desktop";
+      "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
+      "x-scheme-handler/magnet" = "org.qbittorrent.qBittorrent.desktop";
+      "text/plain" = "org.kde.kate.desktop";
+    };
   };
-};
 
-home.file.".local/share/flatpak/overrides/global".text = ''
-  [Context]
-  filesystems=/run/current-system/sw/share/X11/fonts:ro;/nix/store:ro;~/.themes:ro;~/.icons:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;xdg-config/qt5ct:ro;xdg-config/qt6ct:ro;xdg-config/Kvantum:ro;xdg-config/fontconfig:ro
-'';
+  home.file.".local/share/flatpak/overrides/global".text = ''
+    [Context]
+    filesystems=/run/current-system/sw/share/X11/fonts:ro;/nix/store:ro;~/.themes:ro;~/.icons:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;xdg-config/qt5ct:ro;xdg-config/qt6ct:ro;xdg-config/Kvantum:ro;xdg-config/fontconfig:ro
+  '';
 
 # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # here is some command line tools I use frequently
-    # feel free to add your own or remove some of them
 
     neofetch
 
     # archives
+
     zip
     xz
     unzip
@@ -156,46 +147,40 @@ home.file.".local/share/flatpak/overrides/global".text = ''
     
     lolcat
     gh
+    dwt1-shell-color-scripts
   ];
 
-  programs.git = {
-    enable = true;
-    userName = "Omar Hany Kasban";
-    userEmail = "omarhanykaban706@gmail.com";
-  };
-
-  # starship - an customizable prompt for any shell  
-  programs.starship = {
-    enable = true;
-    # custom settings
-    settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
+  programs = {
+    git = {
+      enable = true;
+      userName = "Omar Hany Kasban";
+      userEmail = "omarhanykaban706@gmail.com";
     };
-  };
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    # TODO add your cusotm bashrc here
-    bashrcExtra = ''
-      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-      source /home/omarhanykasban/Documents/GitHub/dot-files/.steavengameryt
-      unalias neofetch
-      alias neofetch-big='neofetch --ascii ~/.config/neofetch/cat.txt | lolcat'
-      alias neofetch-small='neofetch --ascii ~/.config/neofetch/cat2.txt | lolcat'
-      alias clean-nix="sudo nix-collect-garbage -d && sudo nixos-rebuild boot"
-      alias update-nix="sudo nixos-rebuild switch"
-      #alias neofetch='${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat.txt | ${pkgs.lolcat}/bin/lolcat'
-      #alias neofetch-small='${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat2.txt | ${pkgs.lolcat}/bin/lolcat' 
+    starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+        aws.disabled = true;
+        gcloud.disabled = true;
+        line_break.disabled = true;
+      };
+    };
+    bash = {
+      enable = true;
+      enableCompletion = true;
+      bashrcExtra = ''
+        export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+        source /home/omarhanykasban/Documents/GitHub/dot-files/.steavengameryt
+        unalias neofetch
    '';
-
-    # set some aliases, feel free to add more or remove some
-    shellAliases = {
-      k = "kubectl";
-      urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
-      urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+      shellAliases = {
+        cls = "${pkgs.ncurses}/bin/clear && colorscript -r";
+        clear = "${pkgs.ncurses}/bin/clear && colorscript -r";
+        neofetch-big = "${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat.txt | lolcat";
+        neofetch-small = "${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat2.txt | lolcat";
+        clean-nix = "sudo nix-collect-garbage -d && sudo nixos-rebuild boot";
+        update-nix = "sudo nixos-rebuild switch";
+      };   
     };
   };
 
