@@ -23,7 +23,6 @@
   #     xxx
   # '';
 
-wayland.windowManager.hyprland.systemd.enable = true;
 # Themes
 gtk = {
         enable = true;
@@ -57,33 +56,13 @@ gtk = {
     "Xft.dpi" = 24;
   };
 
-xdg.mimeApps = {
-  enable = true;
-  defaultApplications = {
-    "text/html" = "google-chrome.desktop";
-    "x-scheme-handler/http" = "google-chrome.desktop";
-    "x-scheme-handler/https" = "google-chrome.desktop";
-    "x-scheme-handler/about" = "google-chrome.desktop";
-    "x-scheme-handler/unknown" = "google-chrome.desktop";
-    "inode/directory" = "nemo.desktop";
-    "application/x-gnome-saved-search" = "nemo.desktop";
-    "application/x-shellscript" = "org.kde.konsole.desktop";
-    "video/mp4" = "mpv.desktop";
-    "video/quicktime" = "mpv.desktop"; # mov
-    "video/x-matroska" = "mpv.desktop"; # mkv
-    "audio/mpeg" = "mpv.desktop";
-    "audio/x-wav" = "mpv.desktop";
-    "audio/mp3" = "mpv.desktop";
-    "application/x-bittorrent" = "org.qbittorrent.qBittorrent.desktop";
-    "x-scheme-handler/magnet" = "org.qbittorrent.qBittorrent.desktop";
-    "text/plain" = "org.kde.kate.desktop";
-  };
+xdg.mimeApps.defaultApplications = {
+  "text/html" = "google-chrome.desktop";
+  "x-scheme-handler/http" = "google-chrome.desktop";
+  "x-scheme-handler/https" = "google-chrome.desktop";
+  "x-scheme-handler/about" = "google-chrome.desktop";
+  "x-scheme-handler/unknown" = "google-chrome.desktop";
 };
-
-home.file.".local/share/flatpak/overrides/global".text = ''
-  [Context]
-  filesystems=/run/current-system/sw/share/X11/fonts:ro;/nix/store:ro;~/.themes:ro;~/.icons:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;xdg-config/qt5ct:ro;xdg-config/qt6ct:ro;xdg-config/Kvantum:ro;xdg-config/fontconfig:ro
-'';
 
 # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -104,8 +83,6 @@ home.file.".local/share/flatpak/overrides/global".text = ''
     yq-go # yaml processer https://github.com/mikefarah/yq
     eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
-    bat # moderm cat
-    trash-cli # trash command
 
     # networking tools
     mtr # A network diagnostic tool

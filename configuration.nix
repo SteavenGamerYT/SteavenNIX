@@ -92,6 +92,19 @@ services = {
     configDir = "/home/omarhanykasban/Documents/.config/syncthing";
   };
   gnome.gnome-keyring.enable = true;
+    flatpak.remotes = [
+    {name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo";}
+    {name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrep";}
+    {name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo";}
+];
+  flatpak.update.auto.enable = true;
+  flatpak.uninstallUnmanagedPackages = true;
+  flatpak.packages = [
+    { appId = "com.brave.Browser"; origin = "flathub"; }
+    { appId = "com.visualstudio.code"; origin = "flathub"; }
+    #"com.obsproject.Studio"
+    #"im.riot.Riot"
+    ];
 };
 
 security.sudo = {
@@ -104,20 +117,19 @@ security.sudo = {
   systemd.user.services."gnome-keyring".description = "GNOME Keyring Daemon";
   systemd.user.services."gnome-keyring".serviceConfig = {
     Type = "simple";
-    ExecStart = "${pkgs.gnome3.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh";
+     ExecStart = "${pkgs.gnome3.gnome-keyring}/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh";
   };
 
-xdg.portal = {
+  xdg.portal = {
     enable = true;
-    wlr.enable = true;
-    configPackages = [
-      pkgs.xdg-desktop-portal-hyprland
-    ];
+    config.common.default = "*";
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
   };
 
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    #portalPackage = pkgs.xdg-desktop-portal-wlr;
     # enableNvidiaPatches = true;
   };
 environment.sessionVariables = {
@@ -128,7 +140,6 @@ environment.sessionVariables = {
   __GL_SHADER_DISK_CACHE_SIZE = "100000000000";
   __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
 };
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -164,14 +175,15 @@ environment.sessionVariables = {
     #  thunderbird
 #    ];
   };
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
+nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   hyprland
   xdg-desktop-portal-hyprland
+  xdg-desktop-portal-wlr
+  xdg-desktop-portal-gtk
+  xdg-desktop-portal
   waybar
   rofi-wayland
   konsole
@@ -196,7 +208,7 @@ environment.sessionVariables = {
   nordic
   whitesur-cursors
   github-desktop
-  vscode
+#  vscode
   obs-studio
   obs-studio-plugins.obs-vkcapture
   obs-studio-plugins.obs-pipewire-audio-capture
@@ -272,6 +284,9 @@ environment.sessionVariables = {
   gamescope
   goverlay
   gimp-with-plugins
+  #wineWowPackages.waylandFull
+  wineWowPackages.stagingFull
+  winetricks  
 ];
 fonts.packages = with pkgs; [
   (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
