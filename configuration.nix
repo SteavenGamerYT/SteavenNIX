@@ -113,6 +113,7 @@
     flatpak.uninstallUnmanagedPackages = true;
     flatpak.packages = [
       { appId = "com.github.tchx84.Flatseal"; origin = "flathub"; }
+      { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
       ];
     dbus.enable = true;
     printing.enable = true;
@@ -147,13 +148,10 @@
     virt-manager.enable = true;
     adb.enable = true;
   };
-#services.udev.extraRules = ''
-  # Custom udev rule for phone connection
-#  ACTION=="add", SUBSYSTEM=="usb", ATTRS{serial}=="d6188ca0", RUN+="/bin/sh -c 'ANDROID_SERIAL=d6188ca0 adb forward tcp:8081 tcp:8081'"
-#'';
+
 services.udev.extraRules = ''
   # Rule for Oppo phone
-  ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="22d9", ATTRS{idProduct}=="2765", ENV{ID_SERIAL_SHORT}=="RK8W703Q8PR", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=RK8W703Q8PR ${pkgs.android-tools}/bin/adb forward tcp:8081 tcp:8081 > /tmp/adb_log_oppo 2>&1'"
+  ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="22d9", ATTRS{idProduct}=="2765", ENV{ID_SERIAL_SHORT}=="d6188ca0", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=d6188ca0 ${pkgs.android-tools}/bin/adb forward tcp:8081 tcp:8081 > /tmp/adb_log_oppo 2>&1'"
   
   # Rule for Samsung Galaxy phone
   ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860", ENV{ID_SERIAL_SHORT}=="RK8W703Q8PR", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=RK8W703Q8PR ${pkgs.android-tools}/bin/adb forward tcp:8080 tcp:8080 > /tmp/adb_log_samsung 2>&1'"

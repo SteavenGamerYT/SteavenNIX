@@ -20,7 +20,7 @@ VS CODE - Config is in the wrong loction
 
 OBS - Config is in the wrong loction, Requires the phone udev rules to be fixed, plugins to be found and installed
 
-Firefox - Config is in the wrong loction
+Firefox - Config is done, Addons is still not done
 
 Virt manager - Network is not working, Requires more Configs
 
