@@ -34,7 +34,7 @@
       exec-once = swayidle -w before-sleep $locker lock $locker after-resume $locker
       exec-once = swaync
       exec-once = fcitx5
-      exec-once = ${pkgs.kwallet-pam}/libexec/pam_kwallet_init
+      exec-once = xwaylandvideobridge
       exec = pkill waybar & sleep 0.5 && waybar
       # Set en layout at startup
       # Input config
@@ -72,8 +72,16 @@
         shadow_render_power = 2
         col.shadow = 0x66000000
         blurls = gtk-layer-shell
+        blurls = rofi
         # blurls = waybar
         blurls = lockscreen
+        blur {
+          enabled = true
+          size = 4
+          passes = 2
+          new_optimizations = true
+        }
+
       }
       animations {
         enabled = yes

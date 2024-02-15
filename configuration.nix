@@ -13,6 +13,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernel.sysctl = { "vm.max_map_count" = 2147483642; };
+  boot.kernelModules = [ "v4l2loopback-dc" ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
@@ -21,7 +22,28 @@
     networkmanager.enable = true;
     hostName = "nixos";
     enableIPv6 = false;
-    firewall.enable = true;
+    nameservers = ["8.8.8.8" "8.8.4.4" "2001:4860:4860::8888" "2001:4860:4860::8844" ];
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 139 445 47984 47989 47990 48010 25565 ];
+      allowedUDPPorts = [ 137 138 47998 47999 48000 48002 ];
+    };
+    extraHosts = ''
+      109.94.209.70   fitgirlrepacks.co
+      109.94.209.70   fitgirl-repacks.cc
+      109.94.209.70   fitgirl-repacks.com
+      109.94.209.70   fitgirl-repacks.website
+      109.94.209.70   www.fitgirlrepacks.co
+      109.94.209.70   www.fitgirl-repacks.cc
+      109.94.209.70   www.fitgirl-repacks.website
+      109.94.209.70   ww9.fitgirl-repacks.xyz
+      109.94.209.70   *.fitgirl-repacks.xyz
+      109.94.209.70   fitgirl-repacks.xyz
+      109.94.209.70   fitgirl-repack.net
+      109.94.209.70   www.fitgirl-repack.net
+      109.94.209.70   fitgirlpack.site
+      109.94.209.70   www.fitgirlpack.site
+    '';
     #networking.wireless.enable = true;
     #proxy.default = "http://user:password@proxy:port/";
     #proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -44,8 +66,6 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-security.pam.services.login.enableKwallet = true;
-security.pam.services.sddm.enableKwallet = true;
 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
@@ -120,12 +140,30 @@ security.pam.services.sddm.enableKwallet = true;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     };
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    virt-manager.enable = true;
+    adb.enable = true;
   };
+#services.udev.extraRules = ''
+  # Custom udev rule for phone connection
+#  ACTION=="add", SUBSYSTEM=="usb", ATTRS{serial}=="d6188ca0", RUN+="/bin/sh -c 'ANDROID_SERIAL=d6188ca0 adb forward tcp:8081 tcp:8081'"
+#'';
+services.udev.extraRules = ''
+  # Rule for Oppo phone
+  ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="22d9", ATTRS{idProduct}=="2765", ENV{ID_SERIAL_SHORT}=="RK8W703Q8PR", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=RK8W703Q8PR ${pkgs.android-tools}/bin/adb forward tcp:8081 tcp:8081 > /tmp/adb_log_oppo 2>&1'"
+  
+  # Rule for Samsung Galaxy phone
+  ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860", ENV{ID_SERIAL_SHORT}=="RK8W703Q8PR", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=RK8W703Q8PR ${pkgs.android-tools}/bin/adb forward tcp:8080 tcp:8080 > /tmp/adb_log_samsung 2>&1'"
+'';
+
+  virtualisation.libvirtd.enable = true;
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
-    SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
     __GL_SHADER_DISK_CACHE = "1";
     __GL_SHADER_DISK_CACHE_SIZE = "100000000000";
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
@@ -141,6 +179,10 @@ security.pam.services.sddm.enableKwallet = true;
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    wireplumber = {
+      enable = true;
+      package = pkgs.wireplumber;
+    };
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -154,7 +196,7 @@ security.pam.services.sddm.enableKwallet = true;
   users.users.omarhanykasban = {
     isNormalUser = true;
     description = "Omar Hany Kasban";
-    extraGroups = [ "networkmanager" "wheel" "lp" "storage" ];
+    extraGroups = [ "networkmanager" "wheel" "lp" "storage" "libvirtd" "adbusers" ];
 #    packages = with pkgs; [
 #    firefox
 #    google-chrome
@@ -181,6 +223,7 @@ security.pam.services.sddm.enableKwallet = true;
     cinnamon.nemo-with-extensions  
     cinnamon.nemo-emblems
     cinnamon.nemo-fileroller
+    gnome.file-roller
     cinnamon.folder-color-switcher
     gnome.gnome-system-monitor
     procps
@@ -194,15 +237,12 @@ security.pam.services.sddm.enableKwallet = true;
     github-desktop
     vscode
     obs-studio
-    obs-studio-plugins.obs-vkcapture
-    obs-studio-plugins.obs-pipewire-audio-capture
-    obs-studio-plugins.obs-multi-rtmp
-    obs-studio-plugins.wlrobs
     kdenlive
     ffmpeg-full
     lutris
     steam
     protontricks
+    protonup-qt
     libsForQt5.kcalc
     krita
     libreoffice-fresh
@@ -210,7 +250,10 @@ security.pam.services.sddm.enableKwallet = true;
     element-desktop
     firefox
     google-chrome
-    discord
+    (discord.override {
+      withOpenASAR = true;
+      withVencord = true;
+    })
     audacious
     telegram-desktop
     qbittorrent
@@ -268,10 +311,9 @@ security.pam.services.sddm.enableKwallet = true;
     gimp-with-plugins
     #wineWowPackages.waylandFull
     wineWowPackages.stagingFull
-    winetricks  
-    libsForQt5.kwallet
-    libsForQt5.kwallet-pam
-    libsForQt5.kwalletmanager
+    winetricks
+    wireplumber
+    android-tools
   ];
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })

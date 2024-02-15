@@ -180,10 +180,23 @@
         neofetch-small = "${pkgs.neofetch}/bin/neofetch --ascii ~/.config/neofetch/cat2.txt | lolcat";
         clean-nix = "sudo nix-collect-garbage -d && sudo nixos-rebuild boot";
         update-nix = "sudo nixos-rebuild switch";
+        phone-camera = "ANDROID_SERIAL=RK8W703Q8PR ${pkgs.android-tools}/bin/adb forward tcp:8080 tcp:8080 && ANDROID_SERIAL=RK8W703Q8PR ${pkgs.android-tools}/bin/adb forward tcp:8081 tcp:8081";
       };   
+    };
+    obs-studio = {
+      enable = true;
+      plugins = [
+        pkgs.obs-studio-plugins.wlrobs
+      ];
     };
   };
 
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };
+  };
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
