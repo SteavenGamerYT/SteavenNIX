@@ -1,5 +1,6 @@
 # Steaven-NIX
  NIX OS THO!
 
-sudo nixos-rebuild switch
-wget https://github.com/SteavenGamerYT/Steaven-NIX/raw/main/configuration.nix
+This is the NIXOS configration of my pc
+
+Once it start to work 100%, I will install it on my laptops
