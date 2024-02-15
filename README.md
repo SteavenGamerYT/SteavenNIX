@@ -44,4 +44,21 @@ Audio, Requires custom udev rule to fix my gaming headset
 
 Power menu, Requires to be moved to the proper loction
 
+Ssh, Have to be configured with all of my devices
+
+Kde connect, Have to be configured with all of my devices
+
+Syncthing, Wrong Config, Doesnt work, Have to be configured with all of my devices
+
+Printer, Doesnt work, Requires config
+
+LibreOffice, Requries config + custom fonts to be found and installed
+
+OnlyOffice, Requries custom fonts to be found and installed
+
+Github Desktop, Crashs
+
+Element Desktop, Crashs
+
+Konsole, Requires to be moved to the proper loction
 
