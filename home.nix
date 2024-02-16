@@ -196,16 +196,10 @@
       "fihnjjcciajhdojfnbdddfaoknhalnja" # I don't care about cookies
       "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
     ];
-  };
-    programs.firefox = {
+    firefox = {
       enable = true;
       package = pkgs.firefox.override {cfg.enableTridactylNative = true;};
       profiles."omarhanykasban" = {
-
-#        userChrome =
-#          builtins.readFile "${firefox-ui-fix}/css/leptonChrome.css";
-#        userContent =
-#          builtins.readFile "${firefox-ui-fix}/css/leptonContent.css";
         settings = {
           # Disable ipv6
           "network.dns.disableIPv6" = true;
@@ -214,9 +208,6 @@
           "gfx.webrender.all" = true; # Force enable GPU acceleration
           "media.ffmpeg.vaapi.enabled" = true;
           "widget.dmabuf.force-enabled" = true; # Required in recent Firefoxes
-
-          # Re-bind ctrl to super (would interfere with tridactyl otherwise)
-          #"ui.key.accelKey" = 91;
 
           # Keep the reader button enabled at all times; really don't
           # care if it doesn't work 20% of the time, most websites are
@@ -252,44 +243,59 @@
           "toolkit.telemetry.prompted" = "2";
           "privacy.trackingprotection.enabled" = true;
           "privacy.trackingprotection.socialtracking.enabled" = true;
-#          # Actual settings
-#          "app.shield.optoutstudies.enabled" = false;
-#          "browser.bookmarks.restore_default_bookmarks" = false;
-#          "browser.contentblocking.category" = "strict";
-#          "browser.ctrlTab.recentlyUsedOrder" = false;
-#          "browser.discovery.enabled" = false;
-#          "browser.laterrun.enabled" = false;
-#          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" =
-#            false;
-#          "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" =
-#            false;
-#          "browser.newtabpage.activity-stream.feeds.snippets" = false;
-#          "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned" = "";
-#          "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines" = "";
-#          "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-#            false;
-#          "browser.newtabpage.activity-stream.showSponsored" = false;
-#          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-#          "browser.newtabpage.pinned" = false;
-#          "browser.protections_panel.infoMessage.seen" = true;
-#          "browser.quitShortcut.disabled" = true;
-#          "browser.shell.checkDefaultBrowser" = false;
-#          "browser.ssb.enabled" = true;
-#          "browser.toolbars.bookmarks.visibility" = "never";
-#          "browser.urlbar.placeholderName" = "DuckDuckGo";
-#          "browser.urlbar.suggest.openpage" = false;
-#          "datareporting.policy.dataSubmissionEnable" = false;
-#          "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
-#          "dom.security.https_only_mode" = true;
-#          "dom.security.https_only_mode_ever_enabled" = true;
-#          "extensions.getAddons.showPane" = false;
-#          "extensions.htmlaboutaddons.recommendations.enabled" = false;
-#          "extensions.pocket.enabled" = false;
-#          "identity.fxaccounts.enabled" = false;
         };
       };
     };
-
+    mangohud = {
+      enable = true;
+      enableSessionWide = true;
+    };
+  };
+  home.file.".config/MangoHud/MangoHud.conf".text = ''
+    toggle_fps_limit=F1
+    legacy_layout=false
+    gpu_stats
+    gpu_temp
+    gpu_core_clock
+    gpu_load_change
+    gpu_load_value=50,90
+    gpu_load_color=FFFFFF,FFAA7F,CC0000
+    gpu_text=GPU
+    cpu_stats
+    cpu_temp
+    cpu_mhz
+    cpu_load_change
+    core_load_change
+    cpu_load_value=50,90
+    cpu_load_color=FFFFFF,FFAA7F,CC0000
+    cpu_color=2e97cb
+    cpu_text=CPU
+    io_color=a491d3
+    vram
+    vram_color=ad64c1
+    ram
+    ram_color=c26693
+    fps
+    engine_color=eb5b5b
+    gpu_color=2e9762
+    wine_color=eb5b5b
+    frame_timing=1
+    frametime_color=00ff00
+    media_player_color=ffffff
+    table_columns=3
+    background_alpha=0.4
+    font_size=24
+    background_color=020202
+    position=top-left
+    text_color=ffffff
+    round_corners=0
+    toggle_hud=F3
+    toggle_logging=Shift_L+F2
+    upload_log=F5
+    output_folder=/home/omarhanykasban
+    media_player_name=audacious
+    fps_limit=60
+  '';
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
       autoconnect = ["qemu:///system"];

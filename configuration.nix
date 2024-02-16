@@ -24,7 +24,7 @@
     enableIPv6 = false;
     nameservers = ["8.8.8.8" "8.8.4.4" "2001:4860:4860::8888" "2001:4860:4860::8844" ];
     firewall = {
-      enable = true;
+      enable = false;
       allowedTCPPorts = [ 22 139 445 47984 47989 47990 48010 25565 ];
       allowedUDPPorts = [ 137 138 47998 47999 48000 48002 ];
     };
@@ -117,6 +117,7 @@
       ];
     dbus.enable = true;
     printing.enable = true;
+    openssh.enable = true;
   };
 
   security.sudo = {
@@ -149,6 +150,38 @@
     adb.enable = true;
   };
 
+systemd.services.libvirtd = {
+    path = let
+             env = pkgs.buildEnv {
+               name = "qemu-hook-env";
+               paths = with pkgs; [
+                 bash
+                 libvirt
+                 kmod
+                 systemd
+                 ripgrep
+                 sd
+               ];
+             };
+           in
+           [ env ];
+
+    preStart =
+    ''
+      mkdir -p /var/lib/libvirt/hooks
+      mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
+      mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
+
+      ln -sf "/home/omarhanykasban/VMs/Hooks/qemu" "/var/lib/libvirt/hooks/qemu"
+      ln -sf "/home/omarhanykasban/VMs/win10/start.sh" "/var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh"
+      ln -sf "/home/omarhanykasban/VMs/win10/stop.sh" "/var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh"
+
+      chmod +x /var/lib/libvirt/hooks/qemu
+      chmod +x /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
+      chmod +x /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
+    '';
+  };
+
 services.udev.extraRules = ''
   # Rule for Oppo phone
   ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="22d9", ATTRS{idProduct}=="2765", ENV{ID_SERIAL_SHORT}=="d6188ca0", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=d6188ca0 ${pkgs.android-tools}/bin/adb forward tcp:8081 tcp:8081 > /tmp/adb_log_oppo 2>&1'"
@@ -165,6 +198,8 @@ services.udev.extraRules = ''
     __GL_SHADER_DISK_CACHE = "1";
     __GL_SHADER_DISK_CACHE_SIZE = "100000000000";
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
+    PROTON_HIDE_NVIDIA_GPU = "0";
+    PROTON_ENABLE_NVAPI = "1";
   };
 
   # Enable sound with pipewire.
@@ -312,6 +347,10 @@ services.udev.extraRules = ''
     winetricks
     wireplumber
     android-tools
+    audacity
+    gparted
+    yt-dlp
+    openssh
   ];
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })

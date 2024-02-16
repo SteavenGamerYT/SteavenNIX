@@ -58,9 +58,9 @@ services.blueman.enable = true;
     { device = "/dev/disk/by-uuid/7964-0163";
       fsType = "vfat";
     };
-  fileSystems."/media/ssd" =
-    { device = "/dev/disk/by-uuid/501A23A41A2385D6";
-      fsType = "ntfs";
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/8d233f83-af51-4754-b604-ac50f8de1149";
+      fsType = "ext4";
     };
   fileSystems."/media/hdd" =
     { device = "/dev/disk/by-uuid/DE44047744045525";

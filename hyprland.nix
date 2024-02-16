@@ -15,7 +15,12 @@
     enable = true;
     systemd.enable = true;
     extraConfig = ''
-      monitor=,preferred,auto,1
+      #monitor=,preferred,auto,1
+      #monitor=DP-1,1920x1080@60,1366x0,1 
+      #monitor=HDMI-A-1,1366x768@59,0x0,1
+      monitor=DP-1,1920x1080@60,0x0,1
+      monitor=HDMI-A-1,1366x768@59,-1366x0,1
+
       # Fix slow startup
       exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
       exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP 
