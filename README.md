@@ -1,3 +1,9 @@
+# THE END OF NIXOS
+
+NIXOS IS BAD I STOPED USING IT
+
+
+
 # Steaven-NIX
  NIX OS THO!
 

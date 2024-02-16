@@ -20,7 +20,7 @@
   # Networking
   networking = {
     networkmanager.enable = true;
-    hostName = "nixos";
+    hostName = "nixos2";
     enableIPv6 = false;
     nameservers = ["8.8.8.8" "8.8.4.4" "2001:4860:4860::8888" "2001:4860:4860::8844" ];
     firewall = {
@@ -181,7 +181,6 @@ systemd.services.libvirtd = {
       chmod +x /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
     '';
   };
-
 services.udev.extraRules = ''
   # Rule for Oppo phone
   ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="22d9", ATTRS{idProduct}=="2765", ENV{ID_SERIAL_SHORT}=="d6188ca0", TAG+="udev-acl", TAG+="uaccess", TAG+="udev", TAG+="seat", TAG+="input", RUN+="/bin/sh -c 'ANDROID_SERIAL=d6188ca0 ${pkgs.android-tools}/bin/adb forward tcp:8081 tcp:8081 > /tmp/adb_log_oppo 2>&1'"
@@ -351,6 +350,7 @@ services.udev.extraRules = ''
     gparted
     yt-dlp
     openssh
+    openssl
   ];
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
