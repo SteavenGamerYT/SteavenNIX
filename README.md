@@ -4,7 +4,7 @@ NIXOS IS BAD I STOPED USING IT
 
 
 
-# Steaven-NIX
+# SteavenNIX
  NIX OS THO!
 
 This is the NIXOS configration of my pc
