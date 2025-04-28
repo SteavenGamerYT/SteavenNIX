@@ -1,48 +1,22 @@
 {
-  description = "NixOS configuration";
+  description = "SteavenNixOS";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      # build with your own instance of nixpkgs
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nurpkgs.url = "github:nix-community/NUR";
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-            home-manager = {
-            url = "github:nix-community/home-manager/master";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-            nix-flatpak.url = "github:gmodena/nix-flatpak"; #  unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
-
-  outputs = inputs@{ nixpkgs, home-manager, nix-flatpak, ... }: {
+  outputs = { self, nixpkgs, chaotic, nix-flatpak, ... }: {
     nixosConfigurations = {
-      # TODO please change the hostname to your own
-      nixos2 = nixpkgs.lib.nixosSystem {
+      "Omar-PC" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          nix-flatpak.nixosModules.nix-flatpak
           ./configuration.nix
-
-          # make home-manager as a module of nixos
-          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            # TODO replace ryan with your own username
-            home-manager.users.omarhanykasban = import ./home.nix;
-
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-          }
+          nix-flatpak.nixosModules.nix-flatpak
+          chaotic.nixosModules.nyx-cache
+          chaotic.nixosModules.nyx-overlay
+          chaotic.nixosModules.nyx-registry
         ];
       };
     };
