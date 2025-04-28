@@ -150,8 +150,8 @@ nixpkgs.config.allowUnfree = true;
      whitesur-cursors
      git
      gh
-     davinci-resolve-studio
-     dvcp-vaapi
+#     davinci-resolve-studio
+#     dvcp-vaapi
 ]; 
 fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })

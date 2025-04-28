@@ -10,6 +10,6 @@
      betterlockscreen
      dunst
      libnotify
-     looking-glass-client
+     picom
 ];
 }
