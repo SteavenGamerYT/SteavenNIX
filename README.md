@@ -29,7 +29,7 @@ My personal NixOS configuration for my desktop PC. This configuration will event
   - Device synchronization
 
 - **Applications**:
-  - Firefox with addons
+  - Librewolf
   - VS Code
   - OBS Studio
   - Steam
