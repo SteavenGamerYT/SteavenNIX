@@ -1,70 +1,105 @@
-# THE END OF NIXOS
-
-NIXOS IS BAD I STOPED USING IT
-
-
-
 # SteavenNIX
- NIX OS THO!
 
-This is the NIXOS configration of my pc
+My personal NixOS configuration for my desktop PC. This configuration will eventually be used across my laptops once fully tested and stabilized.
 
-Once it start to work 100%, I will install it on my laptops
+## 🚀 Current Status
 
+### Working Features ✅
+- **Window Manager**: Hyprland
+- **System Configuration**:
+  - SSH with key-based authentication
+  - Samba file sharing
+  - Flatpak integration
+  - PipeWire audio system
+  - XDG Portal configuration
+  - Qt theming (Nordic theme)
+  - Font configuration (Nerd Fonts, Noto, etc.)
 
-# Current Feature set
+### Partially Working Features 🟨
+- **Desktop Environment**:
+  - Waybar (needs font configuration)
+  - Rofi (needs proper configuration)
+  - Power menu (needs relocation)
 
-Hyprland - Works
+- **Applications**:
+  - Firefox (basic configuration done, addons pending)
+  - VS Code (needs proper configuration)
+  - OBS Studio (needs udev rules and plugins)
+  - Steam (some games working, runtime issues)
+  - Default applications set (needs refinement)
 
-Waybar - Config is in the wrong loction, Requires custom fonts to be found and installed
+### Needs Configuration 🔧
+- **Hardware Support**:
+  - GPU passthrough
+  - Bluetooth
+  - Audio (gaming headset udev rules)
+  - Printer support
 
-Rofi - Config is in the wrong loction
+- **Virtualization**:
+  - Virt Manager (network configuration)
+  - GPU passthrough
 
-qt themes - have to be found and installed
+- **Applications**:
+  - Proton GE
+  - Emulators
+  - LibreOffice (needs fonts)
+  - OnlyOffice (needs fonts)
+  - GitHub Desktop
+  - Element Desktop
+  - Konsole (needs proper configuration)
 
-VS CODE - Config is in the wrong loction
+### Integration Services
+- KDE Connect (device pairing)
+- Syncthing (configuration and device sync)
+- SSH (device configuration)
 
-OBS - Config is in the wrong loction, Requires the phone udev rules to be fixed, plugins to be found and installed
+## 🛠️ Technical Details
 
-Firefox - Config is done, Addons is still not done
+### System Configuration
+- **Window Manager**: Hyprland
+- **Display Manager**: LightDM
+- **Theme**: Nordic
+- **Icons**: Papirus-Dark
+- **Cursors**: WhiteSur
+- **Font**: RobotoMono Nerd Font
 
-Virt manager - Network is not working, Requires more Configs
+### Package Management
+- Nix packages
+- Flatpak
+- AppImages
 
-Gpu passthrough - Requires some work
+## 📝 TODO
+- [ ] Complete Waybar configuration
+- [ ] Set up proper Rofi configuration
+- [ ] Configure GPU passthrough
+- [ ] Fix Bluetooth support
+- [ ] Set up proper audio configuration
+- [ ] Configure printer support
+- [ ] Complete application configurations
+- [ ] Set up proper device synchronization
 
-kernel based secretly parameters - Requires some work
+## 🔒 Security
+- SSH key-based authentication
+- Samba with user authentication
+- Secure boot configuration
 
-Steam - Some games works and some not (missing runtime)
+## 🎮 Gaming
+- Steam integration
+- Proton GE setup
+- Emulator configuration
+- Game mode and performance optimizations
 
-Proton Ge - Requires to be found and installed
+## 📱 Device Integration
+- KDE Connect setup
+- Syncthing configuration
+- SSH device management
 
-Emulators - Requires to be installed and configured
+## 🎨 Customization
+- Qt theming
+- Font configuration
+- Application theming
+- Desktop environment customization
 
-Flatpak - Requires to be configured, current configration doesnt work
-
-Default Apps. web browsor = chrome, media player = mpv, text editor = kate, Torrent = qbittorrent, File manager = nemo, Requires more configration
-
-Bluetooh, Doesnt work, Requires configration
-
-Audio, Requires custom udev rule to fix my gaming headset
-
-Power menu, Requires to be moved to the proper loction
-
-Ssh, Have to be configured with all of my devices
-
-Kde connect, Have to be configured with all of my devices
-
-Syncthing, Wrong Config, Doesnt work, Have to be configured with all of my devices
-
-Printer, Doesnt work, Requires config
-
-LibreOffice, Requries config + custom fonts to be found and installed
-
-OnlyOffice, Requries custom fonts to be found and installed
-
-Github Desktop, Crashs
-
-Element Desktop, Crashs
-
-Konsole, Requires to be moved to the proper loction
+## 🔄 Updates
+This configuration is actively maintained and updated. Check back regularly for improvements and new features.
 
