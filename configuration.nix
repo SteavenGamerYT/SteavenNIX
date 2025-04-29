@@ -41,6 +41,12 @@ let
     # System monitoring
     lm_sensors
     mission-center
+
+    file
+    coreutils
+    gnugrep
+    xorg.xdpyinfo
+    bc
   ];
 in {
   imports = [
@@ -147,6 +153,7 @@ in {
       };
     };
     flatpak = {
+      enable = true;
       update.onActivation = true;
       remotes = [
         { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
@@ -207,7 +214,7 @@ in {
   security = {
     polkit.enable = true;
     rtkit.enable = true;
-    sudo.wheelNeedsPassword = false;
+    sudo.wheelNeedsPassword = true;
   };
 
   # Networking

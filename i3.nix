@@ -14,5 +14,7 @@
     dunst
     libnotify
     picom
+    imagemagick
+    i3lock-color
   ];
 }
