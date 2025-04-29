@@ -7,6 +7,10 @@ let
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
   
+  # Samba share configuration
+  sambaShareName = "omar-pc";
+  sambaValidUsers = "omarhanykasban";
+  
   # Custom packages
   customPackages = with pkgs; [
     # System utilities
@@ -103,11 +107,17 @@ in {
     };
     openssh = {
       enable = true;
+      allowSFTP = true;
       settings = {
         PermitRootLogin = "no";
-        PasswordAuthentication = false;
+        PasswordAuthentication = true;
         KbdInteractiveAuthentication = false;
       };
+    };
+    udev = {
+      packages = with pkgs; [
+        game-devices-udev-rules
+      ];
     };
     fwupd.enable = true;
     pipewire = {
@@ -151,6 +161,23 @@ in {
         accelProfile = "flat";
         accelSpeed = "0";
       };
+    };
+    samba = {
+      enable = true;
+      smbd.enable = true;
+      nmbd.enable = true;
+      openFirewall = true;
+      settings = {
+        ${sambaShareName} = {
+          path = "/";
+          "read only" = false;
+          "guest ok" = false;
+          "valid users" = sambaValidUsers;
+        };
+      };
+    };
+    samba-wsdd = {
+      openFirewall = true;
     };
     flatpak = {
       enable = true;
@@ -210,6 +237,9 @@ in {
       enableSSHSupport = true;
     };
     nix-ld.enable = true;
+    ssh = {
+      forwardX11 = true;
+    };
   };
 
   security = {
@@ -295,9 +325,11 @@ in {
     };
     graphics = {
       enable = true;
+      enable32Bit = true;
     };
     pulseaudio.enable = false;
     steam-hardware.enable = true;
+    uinput.enable = true;
   };
 
   # System packages
