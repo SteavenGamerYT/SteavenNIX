@@ -1,83 +1,258 @@
 { config, lib, pkgs, ... }:
 
-{
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./i3.nix
-      ./kvm.nix
-    ];
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+let
+  # Custom variables
+  username = "omarhanykasban";
+  hostname = "Omar-PC";
+  timezone = "Africa/Cairo";
+  locale = "en_US.UTF-8";
   
-  users.users.omarhanykasban = {
-    isNormalUser = true;
-    description = "OmarHanyKasban";
-    extraGroups = [ "wheel" "networkmanager" "audio" "libvirtd" "kvm" "libvirt" "input" "render" ];
-    shell = pkgs.bash;
-    home = "/home/omarhanykasban";
+  # Custom packages
+  customPackages = with pkgs; [
+    # System utilities
+    bat
+    eza
+    fd
+    fzf
+    htop
+    jq
+    neofetch
+    ripgrep
+    zoxide
+    
+    # Development tools
+    gcc
+    gnumake
+    cmake
+    pkg-config
+    
+    # Security tools
+    gnupg
+    pass
+    
+    # Media tools
+    ffmpeg
+    imagemagick
+    
+    # Network tools
+    nmap
+    wireshark
+    
+    # System monitoring
+    lm_sensors
+    mission-center
+  ];
+in {
+  imports = [
+    ./hardware-configuration.nix
+    ./i3.nix
+    ./kvm.nix
+  ];
+
+  # Boot configuration
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
   };
 
+  # User configuration
+  users.users.${username} = {
+    isNormalUser = true;
+    description = "OmarHanyKasban";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "libvirtd"
+      "kvm"
+      "libvirt"
+      "input"
+      "render"
+      "docker"
+      "scanner"
+      "lp"
+      "video"
+      "disk"
+    ];
+    shell = pkgs.bash;
+    home = "/home/${username}";
+  };
 
-      services.udisks2.enable = true;
-      services.gvfs.enable = true;
-      services.avahi = {
+  # System services
+  services = {
+    udisks2.enable = true;
+    gvfs.enable = true;
+    avahi = {
       enable = true;
       nssmdns4 = true;
       openFirewall = true;
+    };
+    syncthing = {
+      enable = true;
+      user = username;
+      dataDir = "/home/${username}/Documents";
+      configDir = "/home/${username}/.local/state/syncthing";
+    };
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
       };
-      services.syncthing = {
-            enable = true;
-            user = "omarhanykasban";
-            dataDir = "/home/omarhanykasban/Documents";
-            configDir = "/home/omarhanykasban/.local/state/syncthing";
-      };
-
-    programs.dconf.enable = true;
-   security.polkit.enable = true;
-   networking.hostName = "Omar-PC";
-   networking.networkmanager.enable = true;
-   networking.networkmanager.wifi.powersave = false;
-   time.timeZone = "Africa/Cairo";
-   i18n.defaultLocale = "en_US.UTF-8";
-   console = {
-  #   font = "Lat2-Terminus16";
-     keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-   };
-
-  programs.nix-ld.enable = true;
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      lightdm = {
+    };
+    fwupd.enable = true;
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+      alsa = {
         enable = true;
-        greeters.gtk = {
+        support32Bit = true;
+      };
+    };
+    xserver = {
+      enable = true;
+      displayManager = {
+        lightdm = {
+          enable = true;
+          greeters.gtk = {
             enable = true;
             theme.name = "Nordic";
             iconTheme.name = "Papirus-Dark";
             cursorTheme.size = 24;
             cursorTheme.name = "whitesur-cursors";
+          };
+        };
       };
-     };
- };  
-};
+      xkb = {
+        layout = "us,eg";
+        options = "grp:alt_shift_toggle";
+      };
+    };
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+        scrollMethod = "twofinger";
+        accelProfile = "adaptive";
+        accelSpeed = "0.5";
+      };
+      mouse = {
+        accelProfile = "flat";
+        accelSpeed = "0";
+      };
+    };
+    flatpak = {
+      update.onActivation = true;
+      remotes = [
+        { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
+        { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
+        { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
+        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
+      ];
+      packages = [
+        { appId = "com.brave.Browser"; origin = "flathub"; }
+        { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
+        { appId = "com.obsproject.Studio"; origin = "flathub"; }
+        { appId = "com.discordapp.Discord"; origin = "flathub"; }
+        { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
+        { appId = "info.cemu.Cemu"; origin = "flathub"; }
+        { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
+        { appId = "org.gimp.GIMP"; origin = "flathub"; }
+        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
+        { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
+        { appId = "com.visualstudio.code"; origin = "flathub"; }
+        { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
+      ];
+      overrides = {
+        global = {
+          Environment = {
+            XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
+          };
+          Context = {
+            filesystems = [
+              "~/GitHub/dot-files:ro"
+              "~/.local/share/icons:ro"
+              "~/.local/share/themes:ro"
+              "/run/host/usr/share/icons:ro"
+              "/run/host/usr/share/themes:ro"
+              "xdg-config/qt5ct:ro"
+              "xdg-config/qt6ct:ro"
+              "xdg-config/gtk-3.0:ro"
+              "xdg-config/gtk-4.0:ro"
+              "xdg-config/Kvantum:ro"
+              "xdg-config/gtkrc:ro"
+              "xdg-config/gtkrc-2.0:ro"
+            ];
+          };
+        };
+      };
+    };
+  };
 
-    qt.platformTheme = "qt6ct";
-    qt.style = "kvantum";
-   services.xserver.xkb.layout = "us,eg";
-   services.xserver.xkb.options = "grp:alt_shift_toggle";
+  # System configuration
+  programs = {
+    dconf.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    nix-ld.enable = true;
+  };
 
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+    sudo.wheelNeedsPassword = false;
+  };
 
-   services.printing.enable = true;
-   services.pipewire = {
-     enable = true;
-     pulse.enable = true;
-     wireplumber.enable = true;
-   };
+  # Networking
+  networking = {
+    hostName = hostname;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = false;
+    };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 8080 ];
+      allowedUDPPorts = [ 53 67 68 123 5353 ];
+    };
+  };
 
-  
+  # Localization
+  time.timeZone = timezone;
+  i18n = {
+    defaultLocale = locale;
+    extraLocaleSettings = {
+      LC_ADDRESS = locale;
+      LC_IDENTIFICATION = locale;
+      LC_MEASUREMENT = locale;
+      LC_MONETARY = locale;
+      LC_NAME = locale;
+      LC_NUMERIC = locale;
+      LC_PAPER = locale;
+      LC_TELEPHONE = locale;
+      LC_TIME = locale;
+    };
+  };
+
+  console = {
+    keyMap = "us";
+    font = "latarcyrheb-sun32";
+  };
+
+  # Qt configuration
+  qt = {
+    platformTheme = "qt6ct";
+    style = "kvantum";
+  };
+
+  # XDG Portal configuration
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -98,124 +273,114 @@
       xdg-desktop-portal-wlr
     ];
   };
-  services.libinput.enable = true;
-  services.flatpak.enable = true;
-nixpkgs.config.allowUnfree = true;
-   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-   nixpkgs.overlays = [
+
+  # Hardware configuration
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+    graphics = {
+      enable = true;
+    };
+    pulseaudio.enable = false;
+  };
+
+  # System packages
+  environment.systemPackages = with pkgs; [
+    # Existing packages
+    wget
+    gparted
+    lxqt.lxqt-policykit
+    nemo
+    nemo-fileroller
+    mpv
+    kdePackages.kwallet
+    kdePackages.kwallet-pam
+    kdePackages.kwalletmanager
+    kdePackages.qttools
+    nordic
+    papirus-icon-theme
+    kitty
+    rofi-wayland
+    killall
+    flatpak
+    steam
+    lutris
+    wine-staging
+    winetricks
+    protontricks
+    alsa-utils
+    pamixer
+    playerctl
+    kdePackages.qtstyleplugin-kvantum
+    lxappearance
+    kdePackages.qt6ct
+    libnotify
+    looking-glass-client
+    obs-studio-plugins.obs-vkcapture
+    mangohud
+    gamemode
+    gamescope
+    pciutils
+    usbutils
+    syncthingtray
+    bleachbit
+    whitesur-cursors
+    git
+    gh
+    dwt1-shell-color-scripts
+    fastfetch
+    bluez
+    bluez-alsa
+    bluez-tools
+    blueman
+    code-cursor
+    appimage-run
+    kbd
+ #   dvcp-vaapi
+ #   davinci-resolve-studio
+  ] ++ customPackages;
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+  ];
+
+  # Nix configuration
+  nixpkgs.config.allowUnfree = true;
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+      trusted-users = [ "root" username ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+  };
+
+  nixpkgs.overlays = [
     (self: super: {
-     dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
-     davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
+      dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
+      davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
     })
   ];
-   environment.systemPackages = with pkgs; [
-     wget
-     gparted
-     lxqt.lxqt-policykit
-     nemo
-     nemo-fileroller
-     mpv
-     kdePackages.kwallet
-     kdePackages.kwallet-pam
-     kdePackages.kwalletmanager
-     kdePackages.qttools
-     bat
-     nordic
-     papirus-icon-theme
-     kitty
-     rofi-wayland
-     killall
-     flatpak
-     steam
-     lutris
-     wine-staging
-     winetricks
-     protontricks
-     alsa-utils
-     pamixer
-     playerctl
-     kdePackages.qtstyleplugin-kvantum
-     lxappearance
-     kdePackages.qt6ct
-     libnotify
-     looking-glass-client
-     obs-studio-plugins.obs-vkcapture
-     mangohud
-     gamemode
-     gamescope
-     pciutils
-     usbutils
-     syncthingtray
-     bleachbit
-     whitesur-cursors
-     git
-     gh
-#     davinci-resolve-studio
-#     dvcp-vaapi
-]; 
-fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
-  ];
 
-services.flatpak = {
-  update.onActivation = true;
-  remotes = [
-    { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
-    { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
-    { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
-  ];
-  packages = [
-    { appId = "com.brave.Browser"; origin = "flathub"; }
-    { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
-    { appId = "com.obsproject.Studio"; origin = "flathub"; }
-    { appId = "com.discordapp.Discord"; origin = "flathub"; }
-    { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
-    { appId = "info.cemu.Cemu"; origin = "flathub"; }
-    { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
-    { appId = "org.gimp.GIMP"; origin = "flathub"; }
-    { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
-    { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
-    { appId = "com.visualstudio.code"; origin = "flathub"; }
-    { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
-
-  ];
-  overrides = {
-    global = {
-      Environment = {
-        XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
-      };
-     Context = {
-       filesystems = [
-       "~/GitHub/dot-files:ro"
-       "~/.local/share/icons:ro"
-       "~/.local/share/themes:ro"
-       "/run/host/usr/share/icons:ro"
-       "/run/host/usr/share/themes:ro"
-       "xdg-config/qt5ct:ro"
-       "xdg-config/qt6ct:ro"
-       "xdg-config/gtk-3.0:ro"
-       "xdg-config/gtk-4.0:ro"
-       "xdg-config/Kvantum:ro"
-       "xdg-config/gtkrc:ro"
-       "xdg-config/gtkrc-2.0:ro"
-       ];
-     };
-    };
-   };
-};
-
-
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
-  services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # System version
   system.stateVersion = "24.11";
 }
 
