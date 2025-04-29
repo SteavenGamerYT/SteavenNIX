@@ -350,6 +350,7 @@ in {
     code-cursor
     appimage-run
     kbd
+    game-devices-udev-rules
  #   dvcp-vaapi
  #   davinci-resolve-studio
   ] ++ customPackages;
