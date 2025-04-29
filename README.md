@@ -19,35 +19,34 @@ My personal NixOS configuration for my desktop PC. This configuration will event
   - Custom kernel (CachyOS) with patches
   - Hardware monitoring (lm_sensors, zenpower)
   - CoolerControl for hardware control
+  - Bluetooth support
+  - Audio configuration (including gaming headset)
 
-### Partially Working Features 🟨
 - **Desktop Environment**:
-  - i3 window manager (basic setup)
-  - Polybar (installed but needs configuration)
-  - Rofi (needs proper configuration)
-  - Power menu (needs relocation)
+  - i3 window manager with Polybar
+  - Rofi configuration
+  - Power menu
+  - Device synchronization
 
 - **Applications**:
-  - Firefox (basic configuration done, addons pending)
-  - VS Code (needs proper configuration)
-  - OBS Studio (needs udev rules and plugins)
-  - Steam (some games working, runtime issues)
-  - Default applications set (needs refinement)
-
-### Needs Configuration 🔧
-- **Hardware Support**:
-  - Bluetooth
-  - Audio (gaming headset udev rules)
-  - Printer support
-
-- **Applications**:
+  - Firefox with addons
+  - VS Code
+  - OBS Studio
+  - Steam
+  - Default applications set
   - Proton GE
   - Emulators
+
+### Partially Working Features 🟨
+- **Applications**:
   - LibreOffice (needs fonts)
   - OnlyOffice (needs fonts)
   - GitHub Desktop
   - Element Desktop
-  - Konsole (needs proper configuration)
+
+### Needs Configuration 🔧
+- **Hardware Support**:
+  - Printer support
 
 ### Integration Services
 - KDE Connect (device pairing)
@@ -60,7 +59,7 @@ My personal NixOS configuration for my desktop PC. This configuration will event
 - **Kernel**: CachyOS with custom patches
   - Disabled IT87 driver
   - Disabled unused GPU drivers
-  - AMD GPU passthrough support
+  - Nvidia GPU passthrough support
   - Looking Glass support
 - **Display Manager**: LightDM
 - **Theme**: Nordic
@@ -70,7 +69,7 @@ My personal NixOS configuration for my desktop PC. This configuration will event
 
 ### Hardware Configuration
 - **CPU**: AMD with microcode updates
-- **GPU**: AMD with passthrough support
+- **GPU**: Nvidia with passthrough support
 - **Storage**: Multiple partitions (/, /home, /boot, /mnt/nvme)
 - **Monitors**: Dual monitor setup (1920x1080 + 1366x768)
 - **Cooling**: CoolerControl for hardware control
@@ -82,13 +81,8 @@ My personal NixOS configuration for my desktop PC. This configuration will event
 - Chaotic-Nyx overlay
 
 ## 📝 TODO
-- [ ] Complete i3 and Polybar configuration
-- [ ] Set up proper Rofi configuration
-- [ ] Fix Bluetooth support
-- [ ] Set up proper audio configuration
 - [ ] Configure printer support
-- [ ] Complete application configurations
-- [ ] Set up proper device synchronization
+- [ ] Complete remaining application configurations
 
 ## 🔒 Security
 - SSH key-based authentication
