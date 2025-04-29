@@ -203,6 +203,7 @@ in {
 
   # System configuration
   programs = {
+    steam.enable = true;
     dconf.enable = true;
     gnupg.agent = {
       enable = true;
@@ -296,6 +297,7 @@ in {
       enable = true;
     };
     pulseaudio.enable = false;
+    steam-hardware.enable = true;
   };
 
   # System packages
@@ -317,7 +319,6 @@ in {
     rofi-wayland
     killall
     flatpak
-    steam
     lutris
     wine-staging
     winetricks
@@ -350,7 +351,6 @@ in {
     code-cursor
     appimage-run
     kbd
-    game-devices-udev-rules
  #   dvcp-vaapi
  #   davinci-resolve-studio
   ] ++ customPackages;
