@@ -54,6 +54,7 @@ let
     starship
     atuin
     bash-preexec
+    distrobox
   ];
 in {
   imports = [
@@ -335,6 +336,12 @@ in {
     uinput.enable = true;
   };
 
+  # Virtualization
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
   # System packages
   environment.systemPackages = with pkgs; [
     # Existing packages
@@ -387,8 +394,8 @@ in {
     code-cursor
     appimage-run
     kbd
-    dvcp-vaapi
-    davinci-resolve-studio
+#    dvcp-vaapi
+#    davinci-resolve-studio
   ] ++ customPackages;
 
   # Fonts
