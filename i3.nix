@@ -17,5 +17,6 @@
     imagemagick
     i3lock-color
     xidlehook
+    scrot
   ];
 }

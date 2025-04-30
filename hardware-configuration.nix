@@ -110,7 +110,12 @@
   };
 
   # Hardware configuration
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    amdgpu = {
+      opencl.enable = true;
+    };
+  };
 
   # Networking configuration
   networking = {

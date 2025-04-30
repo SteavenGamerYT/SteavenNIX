@@ -24,30 +24,34 @@
   makeDesktopItem,
   copyDesktopItems,
   jq,
+  perl,
 
   studioVariant ? true,
 
   common-updater-scripts,
   writeShellApplication,
+  pkgs,
 }:
 
 let
   davinci = (
     stdenv.mkDerivation rec {
       pname = "davinci-resolve${lib.optionalString studioVariant "-studio"}";
-      version = "19.1";
+      version = "19.1.4";
 
       nativeBuildInputs = [
         (appimage-run.override { buildFHSEnv = buildFHSEnvChroot; })
         addDriverRunpath
         copyDesktopItems
         unzip
+        perl
       ];
 
       # Pretty sure, there are missing dependencies ...
       buildInputs = [
         libGLU
         xorg.libXxf86vm
+        pkgs.dvcp-vaapi
       ];
 
       src =
@@ -57,9 +61,9 @@ let
             outputHashAlgo = "sha256";
             outputHash =
               if studioVariant then
-                "sha256-uEUZt0TQ4XrAag6NoCPUtYSnkwpwh3BNlol1z/EmP9E="
+                "sha256-OTL83suZXt7DxDz+89zIRJD8R25/HZUQMMGlfS+Ow4I="
               else
-                "sha256-3VVyfXT/mZFuf2GGkNS47ErSdAGpdUUwwwKY19zBBZo=";
+                "sha256-2u1gkaL3vdI+4RnPl5bEXE+zeRhg2BzPWjni015ISWI=";
 
             impureEnvVars = lib.fetchers.proxyImpureEnvVars;
 
@@ -150,7 +154,8 @@ let
           test -e ${lib.escapeShellArg appimageName}
           appimage-run ${lib.escapeShellArg appimageName} -i -y -n -C $out
 
-          mkdir -p $out/{configs,DolbyVision,easyDCP,Fairlight,GPUCache,logs,Media,"Resolve Disk Database",.crashreport,.license,.LUT}
+          mkdir -p $out/{IOPlugins,configs,DolbyVision,easyDCP,Fairlight,GPUCache,logs,Media,"Resolve Disk Database",.crashreport,.license,.LUT}
+          
           runHook postInstall
         '';
 
@@ -170,6 +175,13 @@ let
           fi
         done
         ln -s $out/libs/libcrypto.so.1.1 $out/libs/libcrypt.so.1
+
+        # Apply the patch to the resolve binary
+        perl -pi -e 's/\x74\x11\xe8\x21\x23\x00\x00/\xeb\x11\xe8\x21\x23\x00\x00/g' $out/bin/resolve
+
+        # Install VAAPI plugin
+        mkdir -p $out/IOPlugins
+        cp -r ${pkgs.dvcp-vaapi}/opt/resolve/IOPlugins/* $out/IOPlugins/
       '';
 
       desktopItems = [
@@ -200,8 +212,10 @@ buildFHSEnv {
       aprutil
       bzip2
       davinci
+      dvcp-vaapi
       dbus
       expat
+      ffmpeg
       fontconfig
       freetype
       glib
@@ -254,15 +268,12 @@ buildFHSEnv {
     "--bind \"$HOME\"/.local/share/DaVinciResolve/license ${davinci}/.license"
   ];
 
-runScript = "${bash}/bin/bash ${writeText "davinci-wrapper" ''
-  export QT_XKB_CONFIG_ROOT="${xkeyboard_config}/share/X11/xkb"
-  export QT_PLUGIN_PATH="${davinci}/libs/plugins:$QT_PLUGIN_PATH"
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/lib32:${davinci}/libs
-  perl -pi -e 's/\x74\x11\xe8\x21\x23\x00\x00/\xeb\x11\xe8\x21\x23\x00\x00/g' /opt/resolve/bin/resolve
-
-  ${davinci}/bin/resolve
-''}";
-
+  runScript = "${bash}/bin/bash ${writeText "davinci-wrapper" ''
+    export QT_XKB_CONFIG_ROOT="${xkeyboard_config}/share/X11/xkb"
+    export QT_PLUGIN_PATH="${davinci}/libs/plugins:$QT_PLUGIN_PATH"
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/lib32:${davinci}/libs
+    ${davinci}/bin/resolve
+  ''}";
 
   extraInstallCommands = ''
     mkdir -p $out/share/applications $out/share/icons/hicolor/128x128/apps
@@ -281,7 +292,7 @@ runScript = "${bash}/bin/bash ${writeText "davinci-wrapper" ''
       ];
       text = ''
         set -o errexit
-        drv=pkgs/applications/video/davinci-resolve/default.nix
+        drv=pkgs/by-name/da/davinci-resolve/package.nix
         currentVersion=${lib.escapeShellArg davinci.version}
         downloadsJSON="$(curl --fail --silent https://www.blackmagicdesign.com/api/support/us/downloads.json)"
 

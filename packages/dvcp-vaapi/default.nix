@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchurl, unzip }:
+{ stdenv, lib, fetchurl, unzip, ffmpeg }:
 
 stdenv.mkDerivation rec {
   pname = "dvcp-vaapi";
@@ -10,12 +10,15 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ unzip ];
+  buildInputs = [ ffmpeg ];
+
+  dontUnpack = true;
 
   installPhase = ''
     mkdir -p $out/opt/resolve/IOPlugins
-    unzip $src
-
-    cp -r vaapi_encoder.dvcp.bundle $out/opt/resolve/IOPlugins/
+    unzip $src -d $TMPDIR
+    cp -r $TMPDIR/vaapi_encoder.dvcp.bundle $out/opt/resolve/IOPlugins/
+    chmod -R 755 $out/opt/resolve/IOPlugins
   '';
 
   meta = {

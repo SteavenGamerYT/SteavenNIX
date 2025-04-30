@@ -387,8 +387,8 @@ in {
     code-cursor
     appimage-run
     kbd
- #   dvcp-vaapi
- #   davinci-resolve-studio
+    dvcp-vaapi
+    davinci-resolve-studio
   ] ++ customPackages;
 
   # Fonts
