@@ -16,5 +16,6 @@
     picom
     imagemagick
     i3lock-color
+    xidlehook
   ];
 }

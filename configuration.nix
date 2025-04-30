@@ -51,6 +51,9 @@ let
     gnugrep
     xorg.xdpyinfo
     bc
+    starship
+    atuin
+    bash-preexec
   ];
 in {
   imports = [
@@ -236,7 +239,7 @@ in {
       enable = true;
       enableSSHSupport = true;
     };
-    nix-ld.enable = true;
+    nix-ld.enable = false;
     ssh = {
       forwardX11 = true;
     };
@@ -355,6 +358,7 @@ in {
     wine-staging
     winetricks
     protontricks
+    heroic
     alsa-utils
     pamixer
     playerctl
