@@ -55,7 +55,7 @@ let
     atuin
     bash-preexec
     distrobox
-    btop
+    btop-rocm
   ];
 in {
   imports = [
