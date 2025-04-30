@@ -55,6 +55,7 @@ let
     atuin
     bash-preexec
     distrobox
+    btop
   ];
 in {
   imports = [
