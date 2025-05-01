@@ -19,9 +19,9 @@ fi
 HOSTNAME=$(hostname)
 
 # Check if hostname is valid
-if [ "$HOSTNAME" != "Omar-PC" ] && [ "$HOSTNAME" != "Omar-GamingLaptop" ]; then
+if [ "$HOSTNAME" != "Omar-PC" ] && [ "$HOSTNAME" != "Omar-GamingLaptop" ] && [ "$HOSTNAME" != "Omar-PC-Server" ]; then
     echo "Invalid hostname: $HOSTNAME"
-    echo "This script only supports Omar-PC and Omar-GamingLaptop"
+    echo "This script only supports Omar-PC, Omar-GamingLaptop, and Omar-PC-Server"
     exit 1
 fi
 
@@ -29,15 +29,7 @@ echo "Detected hostname: $HOSTNAME"
 
 # Copy configuration files
 echo "Copying configuration files..."
-cp -v "$HOSTNAME/configuration.nix" /etc/nixos/
-cp -v "$HOSTNAME/hardware-configuration.nix" /etc/nixos/
-cp -v "$HOSTNAME/i3.nix" /etc/nixos/
-cp -v "$HOSTNAME/kvm.nix" /etc/nixos/
-
-# Copy package definitions
-echo "Setting up package definitions..."
-mkdir -pv /etc/nixos/packages
-cp -rv "$HOSTNAME/packages"/* /etc/nixos/packages/
+cp -rv "$HOSTNAME"/* /etc/nixos/
 
 # Build and switch to new configuration
 echo "Building and switching to new configuration..."

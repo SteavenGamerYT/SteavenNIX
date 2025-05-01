@@ -76,6 +76,18 @@
         patch = ./disable-gpus.patch;
       }
     ];
+
+    # Bridge STP configuration
+    kernel.sysctl = {
+      "net.bridge.bridge-nf-call-iptables" = 0;
+      "net.bridge.bridge-nf-call-ip6tables" = 0;
+      "net.bridge.bridge-nf-call-arptables" = 0;
+    };
+  };
+
+  # Disable STP for bridge
+  systemd.services."bridge-stp" = {
+    enable = false;
   };
 
   # File system configuration
@@ -119,7 +131,36 @@
 
   # Networking configuration
   networking = {
-    useDHCP = lib.mkDefault true;
+    useDHCP = lib.mkDefault false;
+    networkmanager = {
+      enable = true;
+      ethernet.macAddress = "fe80::af3f:e416:454d:2c30/64";
+    };
+    bridges = {
+      br0 = {
+        interfaces = [ "enp6s0" ];
+      };
+    };
+    interfaces.br0 = {
+      ipv4 = {
+        addresses = [{
+          address = "192.168.1.14";
+          prefixLength = 24;
+        }];
+        routes = [{
+          address = "0.0.0.0";
+          prefixLength = 0;
+          via = "192.168.1.1";
+        }];
+      };
+      ipv6 = {
+        addresses = [{
+          address = "fe80::af3f:e416:454d:2c30";
+          prefixLength = 64;
+        }];
+      };
+    };
+    nameservers = [ "8.8.8.8" "8.8.4.4" ];
   };
 
   # Nixpkgs configuration

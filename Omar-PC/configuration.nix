@@ -56,11 +56,13 @@ let
     bash-preexec
     distrobox
     btop-rocm
+    topgrade
   ];
 in {
   imports = [
     ./hardware-configuration.nix
     ./i3.nix
+    ./sway.nix
     ./kvm.nix
   ];
 
@@ -286,7 +288,7 @@ in {
 
   console = {
     keyMap = "us";
-    font = "latarcyrheb-sun32";
+    font = "latarcyrheb-sun16";
   };
 
   # Qt configuration
@@ -429,6 +431,7 @@ in {
     (self: super: {
       dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
       davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
+      uwsm = super.callPackage ./packages/uwsm { };
     })
   ];
 
