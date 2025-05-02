@@ -23,6 +23,17 @@ let
     neofetch
     ripgrep
     zoxide
+    file
+    coreutils
+    gnugrep
+    bc
+    starship
+    atuin
+    bash-preexec
+    distrobox
+    btop-rocm
+    topgrade
+    trash-cli
     
     # Development tools
     gcc
@@ -45,18 +56,15 @@ let
     # System monitoring
     lm_sensors
     mission-center
-
-    file
-    coreutils
-    gnugrep
+    
+    # X11 utilities
     xorg.xdpyinfo
-    bc
-    starship
-    atuin
-    bash-preexec
-    distrobox
-    btop-rocm
-    topgrade
+
+    # Benchmark tools
+    mprime
+    unigine-heaven
+    unigine-superposition
+    furmark
   ];
 in {
   imports = [
@@ -99,6 +107,7 @@ in {
 
   # System services
   services = {
+    blueman.enable = true;
     udisks2.enable = true;
     gvfs.enable = true;
     avahi = {
@@ -125,16 +134,6 @@ in {
       packages = with pkgs; [
         game-devices-udev-rules
       ];
-    };
-    fwupd.enable = true;
-    pipewire = {
-      enable = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
     };
     xserver = {
       enable = true;
@@ -200,6 +199,7 @@ in {
         { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
         { appId = "com.obsproject.Studio"; origin = "flathub"; }
         { appId = "com.discordapp.Discord"; origin = "flathub"; }
+        { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
         { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
         { appId = "info.cemu.Cemu"; origin = "flathub"; }
         { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
@@ -237,7 +237,14 @@ in {
 
   # System configuration
   programs = {
-    steam.enable = true;
+    steam = {
+      enable = true;
+      protontricks.enable = true;
+    };
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
     dconf.enable = true;
     gnupg.agent = {
       enable = true;
@@ -319,26 +326,6 @@ in {
     ];
   };
 
-  # Hardware configuration
-  hardware = {
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings = {
-        General = {
-          Enable = "Source,Sink,Media,Socket";
-        };
-      };
-    };
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-    pulseaudio.enable = false;
-    steam-hardware.enable = true;
-    uinput.enable = true;
-  };
-
   # Virtualization
   virtualisation.podman = {
     enable = true;
@@ -367,7 +354,6 @@ in {
     lutris
     wine-staging
     winetricks
-    protontricks
     heroic
     alsa-utils
     pamixer
@@ -380,7 +366,6 @@ in {
     obs-studio-plugins.obs-vkcapture
     mangohud
     gamemode
-    gamescope
     pciutils
     usbutils
     syncthingtray
@@ -390,10 +375,6 @@ in {
     gh
     dwt1-shell-color-scripts
     fastfetch
-    bluez
-    bluez-alsa
-    bluez-tools
-    blueman
     code-cursor
     appimage-run
     kbd

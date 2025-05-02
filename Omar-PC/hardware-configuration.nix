@@ -123,10 +123,31 @@
 
   # Hardware configuration
   hardware = {
+    sensor.hddtemp = {
+      enable = true;
+      drives = [ "*" ];
+    };
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     amdgpu = {
       opencl.enable = true;
     };
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
+      };
+    };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    pulseaudio.enable = false;
+    steam-hardware.enable = true;
+    uinput.enable = true;
   };
 
   # Networking configuration
@@ -172,7 +193,6 @@
       SUBSYSTEM=="kvmfr", OWNER="omarhanykasban", GROUP="kvm", MODE="0660"
       SUBSYSTEM=="usb", ATTR{idVendor}=="040b", ATTR{idProduct}=="0897", ACTION=="add", RUN+="/bin/sh -c 'amixer -c headset set PCM 100% && amixer -c headset set PCM,1 100% && amixer -c Headset set PCM 100% && amixer -c Headset set PCM,1 100%'"
     '';
-
     xserver.config = ''
       Section "Monitor"
           Identifier "HDMI-0"
@@ -191,21 +211,45 @@
           Option "TargetRefresh" "60"
       EndSection
     '';
+    hardware.openrgb.enable = true;
+    input-remapper = {
+      enable = true;
+      enableUdevRules = true;
+    };
+    fwupd.enable = true;
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
   };
 
   # System packages
   environment.systemPackages = with pkgs; [
-    coolercontrol.coolercontrol-gui
-    coolercontrol.coolercontrold
-    coolercontrol.coolercontrol-liqctld
-    coolercontrol.coolercontrol-ui-data
     lm_sensors
-    input-remapper
+    pwvucontrol
   ];
 
   # Programs configuration
-  programs.coolercontrol.enable = true;
+  programs = {
+    coolercontrol.enable = true;
+    nm-applet.enable = true;
+  };
 
   # Swap configuration
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 49152;
+    }
+  ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+    priority = 100;
+  };
 }
