@@ -24,7 +24,6 @@
       "nvidia_uvm"
       "nvidia_drm"
       "i2c_nvidia_gpu"
-      "nvidia-gpu"
     ];
 
     # Blacklisted modules
