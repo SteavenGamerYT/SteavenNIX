@@ -183,8 +183,8 @@
     xserver.videoDrivers = ["nvidia"];
     undervolt = {
         enable = true;
-        coreOffset = -60;
-        uncoreOffset = -60;
+        coreOffset = -40;
+        uncoreOffset = -40;
     };
   };
 
