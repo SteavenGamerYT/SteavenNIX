@@ -19,12 +19,12 @@
       "vfio_pci"
       "vfio_iommu_type1"
       "i915"
-#      "nvidia"
-#      "nvidia_modeset"
-#      "nvidia_uvm"
-#      "nvidia_drm"
-#      "i2c_nvidia_gpu"
-#      "nvidia-gpu"
+      "nvidia"
+      "nvidia_modeset"
+      "nvidia_uvm"
+      "nvidia_drm"
+      "i2c_nvidia_gpu"
+      "nvidia-gpu"
     ];
 
     # Blacklisted modules
