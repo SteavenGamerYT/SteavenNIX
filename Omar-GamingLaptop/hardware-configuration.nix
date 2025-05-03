@@ -19,7 +19,7 @@
       "vfio_pci"
       "vfio_iommu_type1"
       "i915"
-      "nvidia"
+#      "nvidia"
       "nvidia_modeset"
       "nvidia_uvm"
       "nvidia_drm"
