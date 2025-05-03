@@ -172,6 +172,7 @@
     };
     blueman.enable = true;
     throttled.enable = true;
+    xserver.videoDrivers = ["nvidia"];
   };
 
   # System packages
