@@ -168,6 +168,7 @@
         enable = true;
         enableUserService = true;
     };
+    supergfxd.enable = true;
     fwupd.enable = true;
     pipewire = {
       enable = true;
