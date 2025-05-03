@@ -1,126 +1,421 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, ... }:
 
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-
-  # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-
+let
+  # Custom variables
+  username = "omarhanykasban";
+  hostname = "Omar-GamingLaptop";
+  timezone = "Africa/Cairo";
+  locale = "en_US.UTF-8";
   
+  # Samba share configuration
+  sambaShareName = "omar-gaminglaptop";
+  sambaValidUsers = "omarhanykasban";
+  
+  # Custom packages
+  customPackages = with pkgs; [
+    # System utilities
+    bat
+    eza
+    fd
+    fzf
+    htop
+    jq
+    neofetch
+    ripgrep
+    zoxide
+    file
+    coreutils
+    gnugrep
+    bc
+    starship
+    atuin
+    bash-preexec
+    distrobox
+    btop-rocm
+    topgrade
+    trash-cli
+    
+    # Development tools
+    gcc
+    gnumake
+    cmake
+    pkg-config
+    
+    # Security tools
+    gnupg
+    pass
+    
+    # Media tools
+    ffmpeg
+    imagemagick
+    
+    # Network tools
+    nmap
+    wireshark
+    
+    # System monitoring
+    lm_sensors
+    mission-center
+    
+    # X11 utilities
+    xorg.xdpyinfo
 
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
+    # Benchmark tools
+#    mprime
+#    unigine-heaven
+#    unigine-superposition
+#    furmark
+  ];
+in {
+  imports = [
+    ./hardware-configuration.nix
+    ./i3.nix
+    ./sway.nix
+    ./kvm.nix
+  ];
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  # Boot configuration
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
+  # User configuration
+  users.users.${username} = {
+    isNormalUser = true;
+    description = "OmarHanyKasban";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "libvirtd"
+      "kvm"
+      "libvirt"
+      "input"
+      "render"
+      "docker"
+      "scanner"
+      "lp"
+      "video"
+      "disk"
+    ];
+    shell = pkgs.bash;
+    home = "/home/${username}";
+  };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
+  # System services
+  services = {
+    speechd.enable = true;
+    udisks2.enable = true;
+    gvfs.enable = true;
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+    syncthing = {
+      enable = true;
+      user = username;
+      dataDir = "/home/${username}/Documents";
+      configDir = "/home/${username}/.local/state/syncthing";
+    };
+    openssh = {
+      enable = true;
+      allowSFTP = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = true;
+        KbdInteractiveAuthentication = false;
+      };
+    };
+    udev = {
+      packages = with pkgs; [
+        game-devices-udev-rules
+      ];
+    };
+    xserver = {
+      enable = true;
+      displayManager = {
+        lightdm = {
+          enable = true;
+          greeters.gtk = {
+            enable = true;
+            theme.name = "Nordic";
+            iconTheme.name = "Papirus-Dark";
+            cursorTheme.size = 24;
+            cursorTheme.name = "whitesur-cursors";
+          };
+        };
+      };
+      xkb = {
+        layout = "us,eg";
+        options = "grp:alt_shift_toggle";
+      };
+    };
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+        scrollMethod = "twofinger";
+        accelProfile = "adaptive";
+        accelSpeed = "0.5";
+      };
+      mouse = {
+        accelProfile = "flat";
+        accelSpeed = "0";
+      };
+    };
+    samba = {
+      enable = true;
+      smbd.enable = true;
+      nmbd.enable = true;
+      openFirewall = true;
+      settings = {
+        ${sambaShareName} = {
+          path = "/";
+          "read only" = false;
+          "guest ok" = false;
+          "valid users" = sambaValidUsers;
+        };
+      };
+    };
+    samba-wsdd = {
+      openFirewall = true;
+    };
+    flatpak = {
+      enable = true;
+      update.onActivation = true;
+      remotes = [
+        { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
+        { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
+        { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
+        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
+      ];
+      packages = [
+#        { appId = "com.brave.Browser"; origin = "flathub"; }
+#        { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
+#        { appId = "com.obsproject.Studio"; origin = "flathub"; }
+#        { appId = "com.discordapp.Discord"; origin = "flathub"; }
+#        { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
+#        { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
+#        { appId = "info.cemu.Cemu"; origin = "flathub"; }
+#        { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
+#        { appId = "org.gimp.GIMP"; origin = "flathub"; }
+#        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
+#        { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
+#        { appId = "com.visualstudio.code"; origin = "flathub"; }
+#        { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
+      ];
+      overrides = {
+        global = {
+          Environment = {
+            XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
+          };
+          Context = {
+            filesystems = [
+              "~/GitHub/dot-files:ro"
+              "~/.local/share/icons:ro"
+              "~/.local/share/themes:ro"
+              "/run/host/usr/share/icons:ro"
+              "/run/host/usr/share/themes:ro"
+              "xdg-config/qt5ct:ro"
+              "xdg-config/qt6ct:ro"
+              "xdg-config/gtk-3.0:ro"
+              "xdg-config/gtk-4.0:ro"
+              "xdg-config/Kvantum:ro"
+              "xdg-config/gtkrc:ro"
+              "xdg-config/gtkrc-2.0:ro"
+            ];
+          };
+        };
+      };
+    };
+  };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.omarhanykasban = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     tree
-  #   ];
-   };
+  # System configuration
+  programs = {
+    steam = {
+      enable = true;
+      protontricks.enable = true;
+    };
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+    dconf.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    nix-ld.enable = false;
+    ssh = {
+      forwardX11 = true;
+    };
+  };
 
-  # programs.firefox.enable = true;
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+    sudo.wheelNeedsPassword = true;
+  };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-   environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-kitty
-git
-gh
-   ];
+  # Networking
+  networking = {
+    hostName = hostname;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = false;
+    };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 8080 ];
+      allowedUDPPorts = [ 53 67 68 123 5353 ];
+    };
+  };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
+  # Localization
+  time.timeZone = timezone;
+  i18n = {
+    defaultLocale = locale;
+    extraLocaleSettings = {
+      LC_ADDRESS = locale;
+      LC_IDENTIFICATION = locale;
+      LC_MEASUREMENT = locale;
+      LC_MONETARY = locale;
+      LC_NAME = locale;
+      LC_NUMERIC = locale;
+      LC_PAPER = locale;
+      LC_TELEPHONE = locale;
+      LC_TIME = locale;
+    };
+  };
 
-  # List services that you want to enable:
+  console = {
+    keyMap = "us";
+    font = "latarcyrheb-sun16";
+  };
 
-  # Enable the OpenSSH daemon.
-   services.openssh.enable = true;
+  # Qt configuration
+  qt = {
+    platformTheme = "qt6ct";
+    style = "kvantum";
+  };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # XDG Portal configuration
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    config = {
+      preferred = {
+        default = "gtk";
+        "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
+        "org.freedesktop.impl.portal.Screenshot" = "hyprland";
+        "org.freedesktop.impl.portal.FileChooser" = "kde";
+        "org.freedesktop.impl.portal.Secret" = "kwallet";
+        "org.freedesktop.impl.portal.Inhibit" = "none";
+      };
+    };
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+      kdePackages.xdg-desktop-portal-kde
+      xdg-desktop-portal-wlr
+    ];
+  };
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  # Virtualization
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.11"; # Did you read the comment?
+  # System packages
+  environment.systemPackages = with pkgs; [
+    # Existing packages
+    wget
+    gparted
+    lxqt.lxqt-policykit
+    nemo
+    nemo-fileroller
+    mpv
+    kdePackages.kwallet
+    kdePackages.kwallet-pam
+    kdePackages.kwalletmanager
+    kdePackages.qttools
+    nordic
+    papirus-icon-theme
+    kitty
+    rofi-wayland
+    killall
+    flatpak
+    lutris
+    wine-staging
+    winetricks
+    heroic
+    alsa-utils
+    pamixer
+    playerctl
+    kdePackages.qtstyleplugin-kvantum
+    lxappearance
+    kdePackages.qt6ct
+    libnotify
+    looking-glass-client
+    obs-studio-plugins.obs-vkcapture
+    mangohud
+    gamemode
+    pciutils
+    usbutils
+    syncthingtray
+    bleachbit
+    whitesur-cursors
+    git
+    gh
+    dwt1-shell-color-scripts
+    fastfetch
+    code-cursor
+    appimage-run
+    kbd
+#    dvcp-vaapi
+#    davinci-resolve-studio
+  ] ++ customPackages;
 
+  # Fonts
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+  ];
+
+  # Nix configuration
+  nixpkgs.config.allowUnfree = true;
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+      trusted-users = [ "root" username ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+  };
+
+  nixpkgs.overlays = [
+    (self: super: {
+      dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
+      davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
+      uwsm = super.callPackage ./packages/uwsm { };
+    })
+  ];
+
+  # System version
+  system.stateVersion = "24.11";
 }
-
