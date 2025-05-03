@@ -107,7 +107,7 @@ in {
 
   # System services
   services = {
-    blueman.enable = true;
+    speechd.enable = true;
     udisks2.enable = true;
     gvfs.enable = true;
     avahi = {
