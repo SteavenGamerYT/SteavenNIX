@@ -34,6 +34,8 @@ let
     btop-rocm
     topgrade
     trash-cli
+    gnome-disk-utility
+    xviewer
     
     # Development tools
     gcc
