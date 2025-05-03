@@ -194,6 +194,10 @@
   programs = {
     coolercontrol.enable = true;
     nm-applet.enable = true;
+    rog-control-center = {
+        enable = true;
+        autoStart = true;
+    };
   };
 
   # Swap configuration
