@@ -181,12 +181,10 @@
     blueman.enable = true;
     throttled.enable = true;
     xserver.videoDrivers = ["nvidia"];
-    intel-undervolt = {
+    undervolt = {
         enable = true;
-        settings = {
-            "CPU" = -60;
-            "CPU Cache" = -60;
-        };
+        coreOffset = -60;
+        uncoreOffset = -60;
     };
   };
 
