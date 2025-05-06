@@ -38,7 +38,7 @@
     # Additional kernel parameters
     extraModprobeConfig = ''
       options amdgpu ppfeaturemask=0xFFFFFFFF
-      options vfio-pci ids=10de:2188,10de:1aeb,10de:1aec,10de:1aed
+      options vfio-pci ids=10de:2188,10de:1aeb,10de:1aec,10de:1aed,c0a9:540a
       options kvmfr static_size_mb=32
     '';
 
