@@ -10,6 +10,10 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu.swtpm.enable = true;
+    onShutdown = "shutdown";
+    startDelay = 0;
+    shutdownTimeout = 60;
+    parallelShutdown = 5;
   };
 
   # QEMU verbatim configuration
