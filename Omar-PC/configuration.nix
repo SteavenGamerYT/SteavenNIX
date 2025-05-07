@@ -36,6 +36,8 @@ let
     trash-cli
     gnome-disk-utility
     xviewer
+    yt-dlp
+    ffmpeg
     
     # Development tools
     gcc

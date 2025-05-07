@@ -3,12 +3,12 @@
 let
   # Custom variables
   username = "omarhanykasban";
-  hostname = "Omar-GamingLaptop";
+  hostname = "Omar-PC";
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
   
   # Samba share configuration
-  sambaShareName = "omar-gaminglaptop";
+  sambaShareName = "omar-pc";
   sambaValidUsers = "omarhanykasban";
   
   # Custom packages
@@ -36,6 +36,8 @@ let
     trash-cli
     gnome-disk-utility
     xviewer
+    yt-dlp
+    ffmpeg
     
     # Development tools
     gcc
@@ -63,10 +65,10 @@ let
     xorg.xdpyinfo
 
     # Benchmark tools
-#    mprime
-#    unigine-heaven
-#    unigine-superposition
-#    furmark
+    mprime
+    unigine-heaven
+    unigine-superposition
+    furmark
   ];
 in {
   imports = [
@@ -194,22 +196,22 @@ in {
         { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
         { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
         { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
-      #  { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
+        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
       ];
       packages = [
-#        { appId = "com.brave.Browser"; origin = "flathub"; }
-#        { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
-#        { appId = "com.obsproject.Studio"; origin = "flathub"; }
-#        { appId = "com.discordapp.Discord"; origin = "flathub"; }
-#        { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
-#        { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
-#        { appId = "info.cemu.Cemu"; origin = "flathub"; }
-#        { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
-#        { appId = "org.gimp.GIMP"; origin = "flathub"; }
-#        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
-#        { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
-#        { appId = "com.visualstudio.code"; origin = "flathub"; }
-#        { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
+        { appId = "com.brave.Browser"; origin = "flathub"; }
+        { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
+        { appId = "com.obsproject.Studio"; origin = "flathub"; }
+        { appId = "com.discordapp.Discord"; origin = "flathub"; }
+        { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
+        { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
+        { appId = "info.cemu.Cemu"; origin = "flathub"; }
+        { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
+        { appId = "org.gimp.GIMP"; origin = "flathub"; }
+        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
+        { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
+        { appId = "com.visualstudio.code"; origin = "flathub"; }
+        { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
       ];
       overrides = {
         global = {
@@ -421,3 +423,4 @@ in {
   # System version
   system.stateVersion = "24.11";
 }
+
