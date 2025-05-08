@@ -48,6 +48,7 @@
       "pcie_acs_override=downstream,multifunction"
       "pcie_port_pm=off"
       "split_lock_detect=off"
+      "clearcpuid=514"
       "video=HDMI-A-1:1920x1080@60"
       "video=HDMI-A-2:1366x768@60"
     ];
