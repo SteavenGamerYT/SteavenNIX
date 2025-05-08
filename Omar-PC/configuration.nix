@@ -274,7 +274,7 @@ in {
       wifi.powersave = false;
     };
     firewall = {
-      enable = true;
+      enable = false;
       allowedTCPPorts = [ 22 80 443 8080 ];
       allowedUDPPorts = [ 53 67 68 123 5353 ];
     };
