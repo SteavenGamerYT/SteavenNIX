@@ -69,6 +69,19 @@ let
     unigine-heaven
     unigine-superposition
     furmark
+    # Apps
+    dropbox
+    dropbox-cli
+
+    drive
+    google-drive-ocamlfuse
+    bleachbit
+    unityhub
+    anydesk
+    rustdesk
+    parsec-bin
+    libreoffice
+    onlyoffice-desktopeditors
   ];
 in {
   imports = [
@@ -237,6 +250,7 @@ in {
         };
       };
     };
+    onlyoffice.enable = true;
   };
 
   # System configuration
