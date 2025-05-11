@@ -359,9 +359,12 @@ in {
   };
 
   # Virtualization
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
+    waydroid.enable = true;
   };
 
   # System packages

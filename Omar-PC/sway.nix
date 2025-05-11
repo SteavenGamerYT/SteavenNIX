@@ -45,5 +45,8 @@
     wl-clipboard
     nwg-look
     sway-contrib.grimshot
+    wlsunset
+    wdisplays
+    wlr-randr
   ];
 }
