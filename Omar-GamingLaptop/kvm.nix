@@ -28,7 +28,8 @@
       "/dev/kvm",
       "/dev/kvmfr0",
       "/dev/rtc",
-      "/dev/hpet"
+      "/dev/hpet",
+      "/dev/userfaultfd"
     ]
   '';
 }

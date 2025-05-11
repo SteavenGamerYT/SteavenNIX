@@ -10,6 +10,7 @@
       extraSessionCommands = ''
         export XDG_SESSION_DESKTOP=sway
       '';
+      wrapperFeatures.base = true;
       wrapperFeatures.gtk = true;
     };
     waybar.enable = true;
@@ -42,5 +43,6 @@
     grim
     slurp
     wl-clipboard
+    nwg-look
   ];
 }

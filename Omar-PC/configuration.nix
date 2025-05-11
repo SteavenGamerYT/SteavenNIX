@@ -38,7 +38,10 @@ let
     xviewer
     yt-dlp
     ffmpeg
-    
+    ncdu
+    android-tools
+    scrcpy
+
     # Development tools
     gcc
     gnumake
@@ -156,7 +159,7 @@ in {
       enable = true;
       displayManager = {
         lightdm = {
-          enable = true;
+          enable = false;
           greeters.gtk = {
             enable = true;
             theme.name = "Nordic";
@@ -170,6 +173,16 @@ in {
         layout = "us,eg";
         options = "grp:alt_shift_toggle";
       };
+    };
+    displayManager = {
+      sddm = {
+          enable = true;
+          wayland.enable = true;
+          wayland.compositor = "kwin";
+          autoNumlock = true;
+          enableHidpi = true;
+          theme = "nordic";
+        };
     };
     libinput = {
       enable = true;
@@ -272,6 +285,7 @@ in {
     ssh = {
       forwardX11 = true;
     };
+    adb.enable = true;
   };
 
   security = {
@@ -370,7 +384,7 @@ in {
     killall
     flatpak
     lutris
-    wine-staging
+    winePackages.stagingFull
     winetricks
     heroic
     alsa-utils
@@ -430,7 +444,6 @@ in {
     (self: super: {
       dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
       davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
-      uwsm = super.callPackage ./packages/uwsm { };
     })
   ];
 
