@@ -44,5 +44,6 @@
     slurp
     wl-clipboard
     nwg-look
+    sway-contrib.grimshot
   ];
 }
