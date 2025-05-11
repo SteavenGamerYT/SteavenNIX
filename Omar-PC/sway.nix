@@ -33,7 +33,7 @@
     wl-clip-persist
     cliphist
     swayidle
-    swaylock
+    swaylock-effects
     swaybg
     kdePackages.xwaylandvideobridge
     waybar
