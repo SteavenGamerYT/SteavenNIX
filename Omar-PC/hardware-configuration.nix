@@ -51,6 +51,7 @@
       "clearcpuid=514"
       "video=HDMI-A-1:1920x1080@60"
       "video=HDMI-A-2:1366x768@60"
+      "usbcore.autosuspend=-1"
     ];
 
     # Additional kernel packages
