@@ -394,8 +394,10 @@ in {
     pamixer
     playerctl
     kdePackages.qtstyleplugin-kvantum
+    libsForQt5.qtstyleplugin-kvantum
     lxappearance
     kdePackages.qt6ct
+    libsForQt5.qt5ct
     libnotify
     looking-glass-client
     obs-studio-plugins.obs-vkcapture
