@@ -48,5 +48,6 @@
     wlsunset
     wdisplays
     wlr-randr
+    kdePackages.dolphin
   ];
 }
