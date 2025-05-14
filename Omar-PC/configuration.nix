@@ -41,6 +41,7 @@ let
     ncdu
     android-tools
     scrcpy
+    kdePackages.kdeconnect-kde
 
     # Development tools
     gcc
@@ -85,6 +86,7 @@ let
     parsec-bin
     libreoffice
     onlyoffice-desktopeditors
+    kdePackages.okular
   ];
 in {
   imports = [
@@ -131,7 +133,7 @@ in {
     udisks2.enable = true;
     gvfs.enable = true;
     avahi = {
-      enable = true;
+      enable = false;
       nssmdns4 = true;
       openFirewall = true;
     };
@@ -286,6 +288,7 @@ in {
       forwardX11 = true;
     };
     adb.enable = true;
+    kdeconnect.enable = true;
   };
 
   security = {

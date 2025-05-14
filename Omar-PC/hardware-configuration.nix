@@ -232,6 +232,10 @@
       };
     };
     blueman.enable = true;
+    printing = {
+      enable = true;
+      drivers = [ pkgs.hplipWithPlugin ]; 
+    };
   };
 
   # System packages
@@ -240,6 +244,7 @@
     pwvucontrol
     networkmanagerapplet
     lact
+    hplipWithPlugin
   ];
 
   systemd.packages = with pkgs; [ lact ];
