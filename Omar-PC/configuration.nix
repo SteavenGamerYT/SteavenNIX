@@ -228,19 +228,38 @@ in {
         { name = "launcher.moe"; location = "https://gol.launcher.moe/gol.launcher.moe.flatpakrepo"; }
       ];
       packages = [
-        { appId = "com.brave.Browser"; origin = "flathub"; }
+        # Games Utitls
+        { appId = "com.vysp3r.ProtonPlus"; origin = "flathub"; }
+        # Games
+        { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
+        { appId = "org.vinegarhq.Sober"; origin = "flathub"; }
+        { appId = "moe.launcher.an-anime-game-launcher"; origin = "launcher.moe"; }
+        # Emulators
+        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
+        { appId = "info.cemu.Cemu"; origin = "flathub"; }
+        { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
+        # Utitls
+        { appId = "org.kde.kwalletmanager5"; origin = "flathub"; }
+        { appId = "io.github.flattool.Ignition"; origin = "flathub"; }
+        { appId = "io.github.peazip.PeaZip"; origin = "flathub"; }
+        { appId = "com.github.tchx84.Flatseal"; origin = "flathub"; }
+        # Apps
         { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
-        { appId = "com.obsproject.Studio"; origin = "flathub"; }
+        { appId = "com.brave.Browser"; origin = "flathub"; }
         { appId = "com.discordapp.Discord"; origin = "flathub"; }
         { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
-        { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
-        { appId = "info.cemu.Cemu"; origin = "flathub"; }
+        { appId = "org.atheme.audacious"; origin = "flathub"; }
+        { appId = "io.mpv.Mpv"; origin = "flathub"; }
         { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
-        { appId = "org.gimp.GIMP"; origin = "flathub"; }
-        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
-        { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
+        # Coding
         { appId = "com.visualstudio.code"; origin = "flathub"; }
+        { appId = "org.kde.kate"; origin = "flathub"; }
+        { appId = "org.kde.kcalc"; origin = "flathub"; }
         { appId = "io.github.shiftey.Desktop"; origin = "flathub"; }
+        # Video Editing
+        { appId = "com.obsproject.Studio"; origin = "flathub"; }
+        { appId = "net.mediaarea.MediaInfo"; origin = "flathub"; }
+        { appId = "org.gimp.GIMP"; origin = "flathub"; }
       ];
       overrides = {
         global = {
