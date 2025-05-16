@@ -89,6 +89,7 @@
     pulseaudio.enable = false;
     steam-hardware.enable = true;
     uinput.enable = true;
+    intel-gpu-tools.enable = true;
   };
 
   networking = {
