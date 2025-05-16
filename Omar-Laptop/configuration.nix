@@ -3,12 +3,12 @@
 let
   # Custom variables
   username = "omarhanykasban";
-  hostname = "Omar-PC";
+  hostname = "Omar-Laptop";
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
   
   # Samba share configuration
-  sambaShareName = "omar-pc";
+  sambaShareName = "omar-laptop";
   sambaValidUsers = "omarhanykasban";
   
   # Custom packages
