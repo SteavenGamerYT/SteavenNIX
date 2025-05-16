@@ -19,11 +19,12 @@ fi
 HOSTNAME=$(hostname)
 
 # Check if hostname is valid
-if [ "$HOSTNAME" != "Omar-PC" ] && [ "$HOSTNAME" != "Omar-GamingLaptop" ] && [ "$HOSTNAME" != "Omar-PC-Server" ]; then
+if [ "$HOSTNAME" != "Omar-PC" ] && [ "$HOSTNAME" != "Omar-GamingLaptop" ] && [ "$HOSTNAME" != "Omar-Laptop" ] && [ "$HOSTNAME" != "Omar-PC-Server" ]; then
     echo "Invalid hostname: $HOSTNAME"
-    echo "This script only supports Omar-PC, Omar-GamingLaptop, and Omar-PC-Server"
+    echo "This script only supports Omar-PC, Omar-GamingLaptop, Omar-Laptop, and Omar-PC-Server"
     exit 1
 fi
+
 
 echo "Detected hostname: $HOSTNAME"
 
