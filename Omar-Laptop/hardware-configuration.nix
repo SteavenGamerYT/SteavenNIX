@@ -28,7 +28,7 @@
       config.boot.kernelPackages.ddcci-driver
       config.boot.kernelPackages.kvmfr
     ];
-    #kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_cachyos;
     kernel.sysctl = {
       "net.bridge.bridge-nf-call-iptables" = 0;
       "net.bridge.bridge-nf-call-ip6tables" = 0;
