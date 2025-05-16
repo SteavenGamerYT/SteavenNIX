@@ -224,7 +224,7 @@ in {
         { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
         { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
         { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
-        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
+#        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
         { name = "launcher.moe"; location = "https://gol.launcher.moe/gol.launcher.moe.flatpakrepo"; }
       ];
       packages = [
