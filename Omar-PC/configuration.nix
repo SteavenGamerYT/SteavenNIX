@@ -73,7 +73,20 @@ let
     unigine-heaven
     unigine-superposition
     furmark
+
     # Apps
+    # Dolphin
+    kdePackages.dolphin # KDE file manager
+    kdePackages.qtimageformats # Image format support for Qt5
+    kdePackages.ffmpegthumbs # Video thumbnail support
+    kdePackages.kde-cli-tools # KDE command line utilities
+    kdePackages.kdegraphics-thumbnailers # KDE graphics thumbnails
+    kdePackages.kimageformats # Additional image format support for KDE
+    kdePackages.qtsvg # SVG support
+    kdePackages.kio # KDE I/O framework
+    kdePackages.kio-extras # Additional KDE I/O protocols
+    kdePackages.kwayland # KDE Wayland integration
+
     dropbox
     dropbox-cli
 
@@ -87,6 +100,7 @@ let
     libreoffice
     onlyoffice-desktopeditors
     kdePackages.okular
+
   ];
 in {
   imports = [
@@ -413,7 +427,7 @@ in {
     lutris
     winePackages.stagingFull
     winetricks
-    heroic
+   # heroic
     alsa-utils
     pamixer
     playerctl

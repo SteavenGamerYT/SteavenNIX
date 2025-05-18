@@ -73,7 +73,20 @@ let
     unigine-heaven
     unigine-superposition
     furmark
+
     # Apps
+    # Dolphin
+    kdePackages.dolphin # KDE file manager
+    kdePackages.qtimageformats # Image format support for Qt5
+    kdePackages.ffmpegthumbs # Video thumbnail support
+    kdePackages.kde-cli-tools # KDE command line utilities
+    kdePackages.kdegraphics-thumbnailers # KDE graphics thumbnails
+    kdePackages.kimageformats # Additional image format support for KDE
+    kdePackages.qtsvg # SVG support
+    kdePackages.kio # KDE I/O framework
+    kdePackages.kio-extras # Additional KDE I/O protocols
+    kdePackages.kwayland # KDE Wayland integration
+
     dropbox
     dropbox-cli
 
@@ -87,6 +100,7 @@ let
     libreoffice
     onlyoffice-desktopeditors
     kdePackages.okular
+
   ];
 in {
   imports = [
@@ -224,7 +238,7 @@ in {
         { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
         { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
         { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
-#        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
+        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
         { name = "launcher.moe"; location = "https://gol.launcher.moe/gol.launcher.moe.flatpakrepo"; }
       ];
       packages = [
@@ -413,7 +427,7 @@ in {
     lutris
     winePackages.stagingFull
     winetricks
-    heroic
+   # heroic
     alsa-utils
     pamixer
     playerctl
@@ -479,3 +493,4 @@ in {
   # System version
   system.stateVersion = "24.11";
 }
+

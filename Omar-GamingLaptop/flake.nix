@@ -41,7 +41,7 @@
       };
     in {
       nixosConfigurations = {
-        "Omar-PC" = nixpkgs.lib.nixosSystem {
+        "Omar-GamingLaptop" = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./configuration.nix
