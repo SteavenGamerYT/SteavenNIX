@@ -12,7 +12,7 @@
     qemu.swtpm.enable = true;
     onShutdown = "shutdown";
     startDelay = 0;
-    shutdownTimeout = 60;
+    shutdownTimeout = 120;
     parallelShutdown = 5;
   };
 
