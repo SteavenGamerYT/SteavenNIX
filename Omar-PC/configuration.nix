@@ -42,6 +42,7 @@ let
     android-tools
     scrcpy
     kdePackages.kdeconnect-kde
+    tldr
 
     # Development tools
     gcc
@@ -197,7 +198,6 @@ in {
           wayland.compositor = "kwin";
           autoNumlock = true;
           enableHidpi = true;
-          theme = "nordic";
         };
     };
     libinput = {
@@ -487,6 +487,7 @@ in {
     (self: super: {
       dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
       davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
+      SteavennSddm = super.callPackage ./packages/SteavennSddm { };
     })
   ];
 
