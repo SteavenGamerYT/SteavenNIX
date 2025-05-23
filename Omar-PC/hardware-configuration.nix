@@ -245,6 +245,7 @@
     networkmanagerapplet
     lact
     hplipWithPlugin
+    system-config-printer
   ];
 
   systemd.packages = with pkgs; [ lact ];

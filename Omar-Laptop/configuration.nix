@@ -323,6 +323,7 @@ in {
     };
     adb.enable = true;
     kdeconnect.enable = true;
+    file-roller.enable = true;
   };
 
   security = {
@@ -413,6 +414,7 @@ in {
     lxqt.lxqt-policykit
     nemo
     nemo-fileroller
+    file-roller
     mpv
     kdePackages.kwallet
     kdePackages.kwallet-pam
