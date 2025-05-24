@@ -86,7 +86,6 @@
       enable = true;
       enable32Bit = true;
     };
-    pulseaudio.enable = false;
     steam-hardware.enable = true;
     uinput.enable = true;
     intel-gpu-tools.enable = true;
@@ -106,7 +105,7 @@
     udev.extraRules = ''
       SUBSYSTEM=="cpu", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'if grep -q GenuineIntel /proc/cpuinfo; then chmod o+r /sys/class/powercap/intel-rapl:0/energy_uj; fi'"
       SUBSYSTEM=="kvmfr", OWNER="omarhanykasban", GROUP="kvm", MODE="0660"
-      SUBSYSTEM=="usb", ATTR{idVendor}=="040b", ATTR{idProduct}=="0897", ACTION=="add", RUN+="/bin/sh -c 'amixer -c headset set PCM 100% && amixer -c headset set PCM,1 100% && amixer -c Headset set PCM 100% && amixer -c Headset set PCM,1 100%'"
+      SUBSYSTEM=="usb", ATTR{idVendor}=="040b", ATTR{idProduct}=="0897", ACTION=="add", RUN+="/bin/sh -c 'amixer -c headset set PCM 100%% && amixer -c headset set PCM,1 100%% && amixer -c Headset set PCM 100%% && amixer -c Headset set PCM,1 100%%'"
     '';
     input-remapper = {
       enable = true;
@@ -124,6 +123,7 @@
     };
     blueman.enable = true;
     throttled.enable = true;
+    pulseaudio.enable = false;
   };
 
   # System packages

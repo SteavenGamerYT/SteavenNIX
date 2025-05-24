@@ -6,6 +6,10 @@ let
   hostname = "Omar-PC-Server";
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
+  extralocales = [
+  "en_US.UTF-8/UTF-8"
+  "ar_EG.UTF-8/UTF-8"
+  ];
 
   # Custom packages
   customPackages = with pkgs; [
@@ -17,7 +21,7 @@ let
     killall
     
     # Development tools
-    nodejs_23
+    nodejs_24
     caddy
     
     # System monitoring
@@ -38,7 +42,7 @@ in
   };
 
   # System configuration
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   # Networking
   networking = {
@@ -48,7 +52,21 @@ in
 
   # Time and locale
   time.timeZone = timezone;
-  i18n.defaultLocale = locale;
+  i18n = {
+    extraLocales = extralocales;
+    defaultLocale = locale;
+    extraLocaleSettings = {
+      LC_ADDRESS = locale;
+      LC_IDENTIFICATION = locale;
+      LC_MEASUREMENT = locale;
+      LC_MONETARY = locale;
+      LC_NAME = locale;
+      LC_NUMERIC = locale;
+      LC_PAPER = locale;
+      LC_TELEPHONE = locale;
+      LC_TIME = locale;
+    };
+  };
 
   # User configuration
   users.users.${username} = {

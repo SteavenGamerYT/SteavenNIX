@@ -6,7 +6,11 @@ let
   hostname = "Omar-PC";
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
-  
+  extralocales = [
+  "en_US.UTF-8/UTF-8"
+  "ar_EG.UTF-8/UTF-8"
+  ];
+
   # Samba share configuration
   sambaShareName = "omar-pc";
   sambaValidUsers = "omarhanykasban";
@@ -349,6 +353,7 @@ in {
   # Localization
   time.timeZone = timezone;
   i18n = {
+    extraLocales = extralocales;
     defaultLocale = locale;
     extraLocaleSettings = {
       LC_ADDRESS = locale;
@@ -429,7 +434,7 @@ in {
     lutris
     winePackages.stagingFull
     winetricks
-   # heroic
+    heroic
     alsa-utils
     pamixer
     playerctl
@@ -461,13 +466,30 @@ in {
 
   # Fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "RobotoMono" "Meslo" "JetBrainsMono" "Ubuntu" "UbuntuMono" "FiraCode" "DroidSansMono" ]; })
+    roboto
+    roboto-slab
+    roboto-mono
+    roboto-flex
+    roboto-serif
+    nerd-fonts.roboto-mono
+    ubuntu-sans
+    ubuntu-classic
+    nerd-fonts.ubuntu
+    nerd-fonts.ubuntu-sans
+    nerd-fonts.ubuntu-mono
+    fira-code
+    fira-code-symbols
+    fira-mono
+    fira-math
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
+    nerd-fonts.noto
+    texlivePackages.noto-emoji
     liberation_ttf
-    fira-code
-    fira-code-symbols
+    nerd-fonts.liberation
   ];
 
   # Nix configuration
@@ -494,6 +516,5 @@ in {
   ];
 
   # System version
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }
-
