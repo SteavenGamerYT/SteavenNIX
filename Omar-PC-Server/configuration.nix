@@ -72,6 +72,8 @@ in
   users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    shell = pkgs.bash;
+    home = "/home/${username}";
   };
 
   # Nix configuration

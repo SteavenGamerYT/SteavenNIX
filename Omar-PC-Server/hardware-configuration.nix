@@ -40,6 +40,22 @@
       device = "/dev/disk/by-uuid/57e5048a-7743-4eb6-b9f3-e5d4adb803b9";
       fsType = "ext4";
     };
+
+    "/mnt/Omar-PC" = {
+      device = "//192.168.1.14/omar-pc";
+      fsType = "cifs";
+      options = [
+        "username=omarhanykasban"
+        "password=omargamer1234"
+        "uid=1000"
+        "gid=1000"
+        "iocharset=utf8"
+        "vers=3.0"
+        "rw"
+        "nofail"
+        "x-systemd.automount"
+      ];
+    };
   };
 
   # Swap configuration
