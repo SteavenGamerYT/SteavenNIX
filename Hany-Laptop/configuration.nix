@@ -3,7 +3,7 @@
 let
   # Custom variables
   username = "omarhanykasban";
-  hostname = "Omar-Laptop";
+  hostname = "Hany-Laptop";
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
   extralocales = [
@@ -12,7 +12,7 @@ let
   ];
 
   # Samba share configuration
-  sambaShareName = "omar-laptop";
+  sambaShareName = "hany-laptop";
   sambaValidUsers = "omarhanykasban";
   
   # Custom packages
