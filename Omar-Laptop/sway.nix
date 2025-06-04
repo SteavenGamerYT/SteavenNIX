@@ -11,6 +11,7 @@ in
   programs = {
     sway = {
       enable = true;
+      extraOptions = [ "--unsupported-gpu" ];
       xwayland.enable = true;
       extraSessionCommands = ''
         export XDG_SESSION_DESKTOP=sway
@@ -33,10 +34,6 @@ in
       };
     };
   };
-    systemd.user.services.uwsm = {
-
-      serviceConfig.ExecStart = lib.mkForce "${pkgs.uwsm}/bin/uwsm -g 0";
-    };
 
   # Make sure the custom sway.desktop is available system-wide
   environment.etc."xdg/wayland-sessions/sway.desktop".text = ''
@@ -69,4 +66,5 @@ in
     wlr-randr
     kdePackages.xwaylandvideobridge
   ];
+  systemd.targets.network-online.wantedBy = [ ];
 }
