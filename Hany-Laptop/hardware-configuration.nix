@@ -75,6 +75,8 @@
   };
 
   hardware = {
+    bumblebee.enable = false;
+    nvidia-container-toolkit.enable = true;
     nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.stable;
         open = true;
@@ -82,6 +84,7 @@
         modesetting.enable = true;
         powerManagement.enable = true;
         powerManagement.finegrained = false;
+        dynamicBoost.enable = true;
         prime = {
             sync.enable = true;
             reverseSync.enable = false;
@@ -126,6 +129,11 @@
 
   services = {
     xserver.videoDrivers = ["nvidia"];
+    undervolt = {
+        enable = true;
+        coreOffset = -40;
+        uncoreOffset = -40;
+    };
     udev.extraRules = ''
       SUBSYSTEM=="cpu", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'if grep -q GenuineIntel /proc/cpuinfo; then chmod o+r /sys/class/powercap/intel-rapl:0/energy_uj; fi'"
       SUBSYSTEM=="kvmfr", OWNER="omarhanykasban", GROUP="kvm", MODE="0660"
@@ -148,6 +156,7 @@
     blueman.enable = true;
     throttled.enable = true;
     pulseaudio.enable = false;
+    power-profiles-daemon.enable = true;
   };
 
   # System packages
@@ -155,7 +164,12 @@
     lm_sensors
     pwvucontrol
     networkmanagerapplet
+    lact
+    acpi
   ];
+
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = ["multi-user.target"];
 
   # Programs configuration
   programs = {
@@ -175,5 +189,12 @@
     memoryPercent = 100;
     priority = 100;
   };
+
+  powerManagement.cpufreq = {
+    min = 2000000;  # 2.0 GHz in kHz
+    max = null;     # Optional: leave null to allow max frequency
+  };
+
+  nixpkgs.config.nvidia.acceptLicense = true;
 
 }
