@@ -11,6 +11,7 @@ in
   programs = {
     sway = {
       enable = true;
+      extraOptions = [ "--unsupported-gpu" ];
       xwayland.enable = true;
       extraSessionCommands = ''
         export XDG_SESSION_DESKTOP=sway
@@ -34,7 +35,6 @@ in
     };
   };
     systemd.user.services.uwsm = {
-
       serviceConfig.ExecStart = lib.mkForce "${pkgs.uwsm}/bin/uwsm -g 0";
     };
 
