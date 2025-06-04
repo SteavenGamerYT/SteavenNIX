@@ -189,6 +189,10 @@ in {
             cursorTheme.name = "whitesur-cursors";
           };
         };
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
       };
       xkb = {
         layout = "us,eg";
@@ -203,10 +207,6 @@ in {
           wayland.compositor = "kwin";
           autoNumlock = true;
           enableHidpi = true;
-        };
-        gdm = {
-          enable = true;
-          wayland = true;
         };
     };
     libinput = {
