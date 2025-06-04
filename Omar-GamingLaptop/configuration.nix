@@ -250,6 +250,7 @@ in {
         { appId = "com.vysp3r.ProtonPlus"; origin = "flathub"; }
         # Games
         { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
+        { appId = "com.lunarclient.LunarClient"; origin = "flathub"; }
         { appId = "org.vinegarhq.Sober"; origin = "flathub"; }
         { appId = "moe.launcher.an-anime-game-launcher"; origin = "launcher.moe"; }
         # Emulators
@@ -265,6 +266,7 @@ in {
         { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
         { appId = "com.brave.Browser"; origin = "flathub"; }
         { appId = "com.discordapp.Discord"; origin = "flathub"; }
+        { appId = "dev.vencord.Vesktop"; origin = "flathub"; }
         { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
         { appId = "org.atheme.audacious"; origin = "flathub"; }
         { appId = "io.mpv.Mpv"; origin = "flathub"; }
@@ -278,6 +280,7 @@ in {
         { appId = "com.obsproject.Studio"; origin = "flathub"; }
         { appId = "net.mediaarea.MediaInfo"; origin = "flathub"; }
         { appId = "org.gimp.GIMP"; origin = "flathub"; }
+        { appId = "org.audacityteam.Audacity"; origin = "flathub"; }
       ];
       overrides = {
         global = {
