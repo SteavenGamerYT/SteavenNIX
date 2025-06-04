@@ -66,5 +66,5 @@ in
     wlr-randr
     kdePackages.xwaylandvideobridge
   ];
-  systemd.services.systemd-networkd-wait-online.enable = false;
+  systemd.targets.network-online.unitConfig.WantedBy = lib.mkForce [ ];
 }
