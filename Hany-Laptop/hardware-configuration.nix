@@ -156,7 +156,15 @@
     blueman.enable = true;
     throttled.enable = true;
     pulseaudio.enable = false;
-    power-profiles-daemon.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_MIN_PERF_ON_AC = 50;
+        CPU_MAX_PERF_ON_AC = 100;
+      };
+    };
   };
 
   # System packages
@@ -188,11 +196,6 @@
     enable = true;
     memoryPercent = 100;
     priority = 100;
-  };
-
-  powerManagement.cpufreq = {
-    min = 2000000;  # 2.0 GHz in kHz
-    max = null;     # Optional: leave null to allow max frequency
   };
 
   nixpkgs.config.nvidia.acceptLicense = true;
