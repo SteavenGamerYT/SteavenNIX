@@ -66,5 +66,5 @@ in
     wlr-randr
     kdePackages.xwaylandvideobridge
   ];
-  systemd.targets.network-online.wantedBy = [ ];
+  systemd.services.systemd-networkd-wait-online.enable = false;
 }
