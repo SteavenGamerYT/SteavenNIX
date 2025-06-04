@@ -66,5 +66,4 @@ in
     wlr-randr
     kdePackages.xwaylandvideobridge
   ];
-  systemd.targets.network-online.wantedBy = [ ];
 }
