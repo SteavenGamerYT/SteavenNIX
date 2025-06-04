@@ -189,6 +189,10 @@ in {
             cursorTheme.name = "whitesur-cursors";
           };
         };
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
       };
       xkb = {
         layout = "us,eg";
@@ -197,7 +201,7 @@ in {
     };
     displayManager = {
       sddm = {
-          enable = true;
+          enable = false;
           package = pkgs.kdePackages.sddm;
           wayland.enable = true;
           wayland.compositor = "kwin";
