@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  swayWithUnsupportedGpu = pkgs.writeShellScript "sway-uwsm-wrapper" ''
+  swayWithUnsupportedGpu = pkgs.writeShellScriptBin "sway-uwsm-wrapper" ''
     export XDG_SESSION_DESKTOP=sway
     exec ${pkgs.sway}/bin/sway --unsupported-gpu "$@"
   '';
@@ -12,7 +12,6 @@ in
     sway = {
       enable = true;
       xwayland.enable = true;
-      extraOptions = [ "--unsupported-gpu" ];
       extraSessionCommands = ''
         export XDG_SESSION_DESKTOP=sway
       '';
@@ -29,23 +28,37 @@ in
         sway = {
           prettyName = "Sway";
           comment = "Sway compositor managed by UWSM with --unsupported-gpu";
-          binPath = swayWithUnsupportedGpu;
+          binPath = "${swayWithUnsupportedGpu}/bin/sway-uwsm-wrapper";
         };
       };
     };
   };
+    systemd.user.services.uwsm = {
+
+      serviceConfig.ExecStart = lib.mkForce "${pkgs.uwsm}/bin/uwsm -g 0";
+    };
+
+  # Make sure the custom sway.desktop is available system-wide
+  environment.etc."xdg/wayland-sessions/sway.desktop".text = ''
+    [Desktop Entry]
+    Name=Sway (Unsupported GPU)
+    Comment=An i3-compatible Wayland compositor with --unsupported-gpu
+    Exec=${swayWithUnsupportedGpu}/bin/sway-uwsm-wrapper
+    Type=Application
+    DesktopNames=sway
+    X-GDM-SessionRegisters=true
+  '';
 
   environment.systemPackages = with pkgs; [
-    cliphist
-    wl-clip-persist
-    swayidle
+    sway
+    waybar
+    uwsm
     swaylock-effects
     swaybg
-    kdePackages.xwaylandvideobridge
-    waybar
+    swayidle
     swaynotificationcenter
-    uwsm
-    sway
+    cliphist
+    wl-clip-persist
     grim
     slurp
     wl-clipboard
@@ -54,5 +67,6 @@ in
     wlsunset
     wdisplays
     wlr-randr
+    kdePackages.xwaylandvideobridge
   ];
 }
