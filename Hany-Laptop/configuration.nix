@@ -520,6 +520,7 @@ in {
       dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
       davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
       SteavennSddm = super.callPackage ./packages/SteavennSddm { };
+      lact = super.callPackage ./packages/lact { };
     })
   ];
 

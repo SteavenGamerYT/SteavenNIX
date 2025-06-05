@@ -131,6 +131,7 @@
     lm_sensors
     pwvucontrol
     networkmanagerapplet
+    vpl-gpu-rt
   ];
 
   # Programs configuration

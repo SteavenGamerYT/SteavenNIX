@@ -128,7 +128,7 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   services = {
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = ["modesetting" "nvidia"];
     undervolt = {
         enable = true;
         coreOffset = -40;
@@ -174,6 +174,12 @@
     networkmanagerapplet
     lact
     acpi
+    nvidia-vaapi-driver
+#    nvtopPackages.full
+    vulkan-tools
+    vpl-gpu-rt
+    vaapiIntel 
+    intel-media-driver
   ];
 
   systemd.packages = with pkgs; [ lact ];
