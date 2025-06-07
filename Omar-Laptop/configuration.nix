@@ -147,6 +147,7 @@ in {
   };
 
   # System services
+  systemd.coredump.enable = false;
   services = {
     speechd.enable = true;
     udisks2.enable = true;
