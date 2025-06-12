@@ -66,6 +66,12 @@
       device = "/dev/disk/by-uuid/820ff00e-320e-4ce3-b157-e1139779c524";
       fsType = "ext4";
     };
+    
+    "/mnt/nvme" = {
+      device = "/dev/disk/by-uuid/46fc36ed-0ab2-44da-ba18-02ea90fb2c01";
+      fsType = "ext4";
+      options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
+    };
 
     "/var/lib/flatpak" = {
       device = "/home/flatpak";
