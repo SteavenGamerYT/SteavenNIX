@@ -36,7 +36,7 @@ in
   };
 
   # Make sure the custom sway.desktop is available system-wide
-  environment.etc."xdg/wayland-sessions/sway.desktop".text = ''
+  environment.etc."xdg/wayland-sessions/sway-uwsm.desktop".text = ''
     [Desktop Entry]
     Name=Sway (Unsupported GPU)
     Comment=An i3-compatible Wayland compositor with --unsupported-gpu

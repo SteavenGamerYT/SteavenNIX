@@ -201,6 +201,7 @@ in {
       };
     };
     displayManager = {
+      defaultSession = "sway-uwsm";
       sddm = {
           enable = false;
           package = pkgs.kdePackages.sddm;
