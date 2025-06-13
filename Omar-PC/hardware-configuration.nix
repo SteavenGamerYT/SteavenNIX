@@ -149,6 +149,9 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+      extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+      ];
     };
     steam-hardware.enable = true;
     uinput.enable = true;
@@ -236,6 +239,7 @@
       drivers = [ pkgs.hplipWithPlugin ]; 
     };
     pulseaudio.enable = false;
+    xserver.videoDrivers = [ "amdgpu" ];
   };
 
   # System packages
@@ -246,6 +250,8 @@
     lact
     hplipWithPlugin
     system-config-printer
+    gnome-firmware
+    clinfo
   ];
 
   systemd.packages = with pkgs; [ lact ];
