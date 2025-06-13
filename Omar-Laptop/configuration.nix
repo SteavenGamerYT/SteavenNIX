@@ -445,6 +445,7 @@ in {
     winePackages.stagingFull
     winetricks
     heroic
+    legendary-heroic
     alsa-utils
     pamixer
     playerctl
