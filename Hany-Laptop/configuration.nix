@@ -105,7 +105,7 @@ let
     libreoffice
     onlyoffice-desktopeditors
     kdePackages.okular
-
+    baobab
   ];
 in {
   imports = [
@@ -249,11 +249,12 @@ in {
         { name = "flathub"; location = "https://flathub.org/repo/flathub.flatpakrepo"; }
         { name = "flathub-beta"; location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"; }
         { name = "appcenter"; location = "https://flatpak.elementary.io/repo.flatpakrepo"; }
-#        { name = "fedora"; location = "https://flatpak.fedoraproject.org/repo/fedora.flatpakrepo"; }
+        { name = "fedora"; location = "oci+https://registry.fedoraproject.org"; }
         { name = "launcher.moe"; location = "https://gol.launcher.moe/gol.launcher.moe.flatpakrepo"; }
+        { name = "gnome-nightly"; location = "https://nightly.gnome.org/gnome-nightly.flatpakrepo"; }
       ];
       packages = [
-        # Games Utitls
+        # Games Utilities
         { appId = "com.vysp3r.ProtonPlus"; origin = "flathub"; }
         # Games
         { appId = "org.prismlauncher.PrismLauncher"; origin = "flathub"; }
@@ -261,23 +262,37 @@ in {
         { appId = "org.vinegarhq.Sober"; origin = "flathub"; }
         { appId = "moe.launcher.an-anime-game-launcher"; origin = "launcher.moe"; }
         # Emulators
-        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
+        { appId = "org.libretro.RetroArch"; origin = "flathub"; }
+        { appId = "org.DolphinEmu.dolphin-emu"; origin = "flathub"; }
         { appId = "info.cemu.Cemu"; origin = "flathub"; }
         { appId = "io.github.ryubing.Ryujinx"; origin = "flathub"; }
-        # Utitls
+        { appId = "org.duckstation.DuckStation"; origin = "flathub"; }
+        { appId = "net.pcsx2.PCSX2"; origin = "flathub"; }
+        { appId = "net.rpcs3.RPCS3"; origin = "flathub"; }
+        # Utilities
         { appId = "org.kde.kwalletmanager5"; origin = "flathub"; }
         { appId = "io.github.flattool.Ignition"; origin = "flathub"; }
         { appId = "io.github.peazip.PeaZip"; origin = "flathub"; }
         { appId = "com.github.tchx84.Flatseal"; origin = "flathub"; }
+        { appId = "io.github.flattool.Warehouse"; origin = "flathub"; }
+        { appId = "io.github.jonmagon.kdiskmark"; origin = "flathub"; }
         # Apps
         { appId = "io.gitlab.librewolf-community"; origin = "flathub"; }
         { appId = "com.brave.Browser"; origin = "flathub"; }
+        { appId = "org.mozilla.Thunderbird"; origin = "flathub"; }
+        { appId = "org.qownnotes.QOwnNotes"; origin = "flathub"; }
         { appId = "com.discordapp.Discord"; origin = "flathub"; }
         { appId = "dev.vencord.Vesktop"; origin = "flathub"; }
+        { appId = "im.riot.Riot"; origin = "flathub"; }
+        { appId = "org.telegram.desktop"; origin = "flathub"; }
         { appId = "com.ktechpit.whatsie"; origin = "flathub"; }
         { appId = "org.atheme.audacious"; origin = "flathub"; }
         { appId = "io.mpv.Mpv"; origin = "flathub"; }
+        { appId = "org.videolan.VLC"; origin = "flathub"; }
+        { appId = "rs.ruffle.Ruffle"; origin = "flathub"; }
         { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
+        { appId = "com.bitwarden.desktop"; origin = "flathub"; }
+        { appId = "io.ente.auth"; origin = "flathub"; }
         # Coding
         { appId = "com.visualstudio.code"; origin = "flathub"; }
         { appId = "org.kde.kate"; origin = "flathub"; }
@@ -286,6 +301,8 @@ in {
         # Video Editing
         { appId = "com.obsproject.Studio"; origin = "flathub"; }
         { appId = "net.mediaarea.MediaInfo"; origin = "flathub"; }
+        { appId = "fr.handbrake.ghb"; origin = "flathub"; }
+        { appId = "org.kde.kdenlive"; origin = "flathub"; }
         { appId = "org.gimp.GIMP"; origin = "flathub"; }
         { appId = "org.audacityteam.Audacity"; origin = "flathub"; }
       ];
