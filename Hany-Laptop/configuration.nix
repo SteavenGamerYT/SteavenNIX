@@ -110,6 +110,7 @@ let
 in {
   imports = [
     ./hardware-configuration.nix
+    ./steavensettings.nix
     ./i3.nix
     ./sway.nix
     ./kvm.nix
