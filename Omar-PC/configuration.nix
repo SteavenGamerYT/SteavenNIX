@@ -460,7 +460,7 @@ in {
     killall
     flatpak
     lutris
-    winePackages.stagingFull
+    wineWowPackages.staging
     winetricks
     heroic
     legendary-heroic
