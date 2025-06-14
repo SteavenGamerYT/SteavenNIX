@@ -47,6 +47,7 @@ let
     scrcpy
     kdePackages.kdeconnect-kde
     tldr
+    waycheck
 
     # Development tools
     gcc
@@ -68,7 +69,6 @@ let
     
     # System monitoring
     lm_sensors
-    mission-center
     
     # X11 utilities
     xorg.xdpyinfo
