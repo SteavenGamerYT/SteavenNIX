@@ -48,6 +48,7 @@ let
     kdePackages.kdeconnect-kde
     tldr
     waycheck
+    sshpass
 
     # Development tools
     gcc
@@ -448,6 +449,9 @@ in {
     nemo
     nemo-fileroller
     file-roller
+    unzip
+    unrar
+    p7zip
     mpv
     kdePackages.kwallet
     kdePackages.kwallet-pam
