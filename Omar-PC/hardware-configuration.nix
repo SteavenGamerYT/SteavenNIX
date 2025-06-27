@@ -252,6 +252,7 @@
     system-config-printer
     gnome-firmware
     clinfo
+    efibootmgr
   ];
 
   systemd.packages = with pkgs; [ lact ];

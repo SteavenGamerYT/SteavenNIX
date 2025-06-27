@@ -49,6 +49,9 @@ let
     tldr
     waycheck
     sshpass
+    sassc
+    glib
+    libxml2
 
     # Development tools
     gcc
