@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, unstable, ... }:
 
 let
   # Custom variables
@@ -467,6 +467,7 @@ in {
     killall
     flatpak
     lutris
+    unstable.xenia-canary
     wineWowPackages.staging
     winetricks
     heroic
@@ -493,7 +494,7 @@ in {
     gh
     dwt1-shell-color-scripts
     fastfetch
-    code-cursor
+    unstable.code-cursor
     appimage-run
     kbd
 #    dvcp-vaapi
@@ -548,7 +549,6 @@ in {
       dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
       davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
       SteavennSddm = super.callPackage ./packages/SteavennSddm { };
-      lact = super.callPackage ./packages/lact { };
     })
   ];
 
