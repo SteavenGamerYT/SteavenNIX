@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, unstable, modulesPath, ... }:
 
 {
   imports = [
@@ -247,15 +247,16 @@
     lm_sensors
     pwvucontrol
     networkmanagerapplet
-    lact
+    unstable.lact
     hplipWithPlugin
     system-config-printer
     gnome-firmware
     clinfo
     efibootmgr
+    ollama-rocm
   ];
 
-  systemd.packages = with pkgs; [ lact ];
+  systemd.packages = with pkgs; [ unstable.lact ];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
 
   # Programs configuration

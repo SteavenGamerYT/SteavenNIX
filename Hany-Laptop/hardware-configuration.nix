@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, unstable, modulesPath, ... }:
 
 {
   imports =
@@ -178,7 +178,7 @@
     lm_sensors
     pwvucontrol
     networkmanagerapplet
-    lact
+    unstable.lact
     acpi
     nvidia-vaapi-driver
 #    nvtopPackages.full
@@ -188,7 +188,7 @@
     intel-media-driver
   ];
 
-  systemd.packages = with pkgs; [ lact ];
+  systemd.packages = with pkgs; [ unstable.lact ];
   systemd.services.lactd.wantedBy = ["multi-user.target"];
 
   # Programs configuration
