@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     
@@ -20,10 +21,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, chaotic, nix-flatpak, nixos-hardware, nil, alejandra, nix-index-database, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, chaotic, nix-flatpak, nixos-hardware, nil, alejandra, nix-index-database, ... } @ inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      unstable = import nixpkgs-unstable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
       
       # Common configuration for all systems
       commonConfig = {
@@ -50,6 +55,12 @@
             chaotic.nixosModules.nyx-overlay
             chaotic.nixosModules.nyx-registry
             nix-index-database.nixosModules.nix-index
+
+            {
+              _module.args = {
+                unstable = unstable;
+              };
+            }
           ] ++ [
             commonConfig
           ];
