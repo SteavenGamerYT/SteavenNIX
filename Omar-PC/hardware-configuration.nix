@@ -1,6 +1,10 @@
 { config, lib, pkgs, unstable, modulesPath, ... }:
 
 {
+  nixpkgs.overlays = [
+    (import ./overlays/kmod-override.nix)
+  ];
+  
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -15,6 +19,7 @@
       "zenpower"
       "drivetemp"
       "kvmfr"
+      "pcspkr"
     ];
     initrd.kernelModules = [
       "vfio"
@@ -254,6 +259,7 @@
     clinfo
     efibootmgr
     ollama-rocm
+    beep
   ];
 
   systemd.packages = with pkgs; [ unstable.lact ];
