@@ -52,6 +52,8 @@ let
     sassc
     glib
     libxml2
+    waydroid-helper
+    waydroid_script
 
     # Development tools
     gcc
@@ -95,6 +97,14 @@ let
     kdePackages.kio # KDE I/O framework
     kdePackages.kio-extras # Additional KDE I/O protocols
     kdePackages.kwayland # KDE Wayland integration
+
+    # Nemo
+    nemo
+    nemo-fileroller
+    file-roller
+    xfce.tumbler
+    ffmpegthumbnailer
+    libheif
 
     dropbox
     dropbox-cli
@@ -441,7 +451,10 @@ in {
       enable = true;
       dockerCompat = true;
     };
-    waydroid.enable = true;
+    waydroid = {
+      enable = true;
+      package = unstable.waydroid;
+    };
   };
 
   # System packages
@@ -450,9 +463,6 @@ in {
     wget
     gparted
     lxqt.lxqt-policykit
-    nemo
-    nemo-fileroller
-    file-roller
     unzip
     unrar
     p7zip
@@ -550,6 +560,7 @@ in {
       dvcp-vaapi = super.callPackage ./packages/dvcp-vaapi { };
       davinci-resolve-studio = super.callPackage ./packages/davinci-resolve { };
       SteavennSddm = super.callPackage ./packages/SteavennSddm { };
+      waydroid_script = super.callPackage ./packages/waydroid_script { };
     })
   ];
 
