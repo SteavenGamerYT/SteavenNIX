@@ -70,7 +70,7 @@
     interfaces.enp1s0 = {
       ipv4 = {
         addresses = [{
-          address = "192.168.1.112";
+          address = "192.168.1.16";
           prefixLength = 24;
         }];
         routes = [{
@@ -80,7 +80,7 @@
         }];
       };
     };
-    nameservers = [ "8.8.8.8" "8.8.4.4" ];
+    nameservers = [ "192.168.1.116" "8.8.8.8" ];
   };
 
   # Platform configuration

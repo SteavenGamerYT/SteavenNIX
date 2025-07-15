@@ -3,6 +3,12 @@
 {
   nixpkgs.overlays = [
     (import ./overlays/kmod-override.nix)
+#    (final: prev: {
+#      mesa = unstable.mesa;
+#      mesa_drivers = unstable.mesa_drivers;
+#      libGL = unstable.libGL;
+#      libglvnd = unstable.libglvnd;
+#    })
   ];
   
   imports = [
@@ -193,7 +199,7 @@
         }];
       };
     };
-    nameservers = [ "8.8.8.8" "8.8.4.4" ];
+    nameservers = [ "192.168.1.116" "8.8.8.8" ];
   };
 
   # Nixpkgs configuration
@@ -260,6 +266,7 @@
     efibootmgr
     ollama-rocm
     beep
+    mesa-demos
   ];
 
   systemd.packages = with pkgs; [ unstable.lact ];
