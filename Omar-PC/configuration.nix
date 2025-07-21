@@ -11,6 +11,9 @@ let
   "ar_EG.UTF-8/UTF-8"
   ];
 
+  # Sunshine configuration
+  SunshinePort = 6000;
+
   # Samba share configuration
   sambaShareName = "omar-pc";
   sambaValidUsers = "omarhanykasban";
@@ -165,6 +168,13 @@ in {
   # System services
   systemd.coredump.enable = false;
   services = {
+    sunshine = {
+      enable = true;
+      autoStart = true;
+      openFirewall = true;
+      capSysAdmin = true;
+      settings.port = SunshinePort;
+    };
     speechd.enable = true;
     udisks2.enable = true;
     gvfs.enable = true;
@@ -277,6 +287,7 @@ in {
         { appId = "com.lunarclient.LunarClient"; origin = "flathub"; }
         { appId = "org.vinegarhq.Sober"; origin = "flathub"; }
         { appId = "moe.launcher.an-anime-game-launcher"; origin = "launcher.moe"; }
+        { appId = "moe.launcher.the-honkers-railway-launcher"; origin = "launcher.moe"; }
         # Emulators
         { appId = "org.libretro.RetroArch"; origin = "flathub"; }
         { appId = "org.DolphinEmu.dolphin-emu"; origin = "flathub"; }
@@ -307,8 +318,10 @@ in {
         { appId = "org.videolan.VLC"; origin = "flathub"; }
         { appId = "rs.ruffle.Ruffle"; origin = "flathub"; }
         { appId = "org.qbittorrent.qBittorrent"; origin = "flathub"; }
+        { appId = "io.webtorrent.WebTorrent"; origin = "flathub"; }
         { appId = "com.bitwarden.desktop"; origin = "flathub"; }
         { appId = "io.ente.auth"; origin = "flathub"; }
+        { appId = "com.moonlight_stream.Moonlight"; origin = "flathub"; }
         # Coding
         { appId = "com.visualstudio.code"; origin = "flathub"; }
         { appId = "org.kde.kate"; origin = "flathub"; }
