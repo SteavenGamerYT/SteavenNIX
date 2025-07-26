@@ -57,7 +57,8 @@ let
     libxml2
     waydroid-helper
     waydroid_script
-
+    unstable.mission-center
+    
     # Development tools
     gcc
     gnumake
