@@ -130,6 +130,12 @@
       options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
     };
 
+    "/mnt/hdd2" = {
+      device = "/dev/disk/by-uuid/72992caa-c5b6-40f9-b4f6-1679a2510174";
+      fsType = "ext4";
+      options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
+    };
+
     "/var/lib/flatpak" = {
       device = "/home/flatpak";
       fsType = "none";

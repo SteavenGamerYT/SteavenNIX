@@ -58,6 +58,8 @@ let
     waydroid-helper
     waydroid_script
     unstable.mission-center
+    smartmontools
+    nvme-cli
 
     # Development tools
     gcc
@@ -124,6 +126,7 @@ let
     onlyoffice-desktopeditors
     kdePackages.okular
     baobab
+    hyfetch
   ];
 in {
   imports = [
