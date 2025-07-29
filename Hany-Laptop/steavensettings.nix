@@ -26,7 +26,7 @@
     DefaultTimeoutStopSec=10s
   '';
 
-  systemd.services."your-service".serviceConfig.TimeoutStopSec = lib.mkDefault "10s";
+  systemd.services."user@".serviceConfig.TimeoutStopSec = lib.mkDefault "10s";
   services.journald.extraConfig = ''
     SystemMaxUse=50M
   '';

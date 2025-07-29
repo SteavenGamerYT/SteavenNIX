@@ -60,6 +60,7 @@ let
     unstable.mission-center
     smartmontools
     nvme-cli
+    hdparm
 
     # Development tools
     gcc
@@ -223,6 +224,7 @@ in {
         gdm = {
           enable = true;
           wayland = true;
+          autoSuspend = false;
         };
       };
       xkb = {

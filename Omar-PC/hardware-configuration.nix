@@ -131,6 +131,18 @@
     };
 
     "/mnt/hdd2" = {
+      device = "/dev/disk/by-uuid/1d5fa1ec-cf1e-4d8b-a604-4a4b09337003";
+      fsType = "ext4";
+      options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
+    };
+
+    "/mnt/hdd3" = {
+      device = "/dev/disk/by-uuid/a9a4ea8c-b44b-4126-b450-eadb6cd4efcd";
+      fsType = "ext4";
+      options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
+    };
+
+    "/mnt/hdd4" = {
       device = "/dev/disk/by-uuid/72992caa-c5b6-40f9-b4f6-1679a2510174";
       fsType = "ext4";
       options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" ];
