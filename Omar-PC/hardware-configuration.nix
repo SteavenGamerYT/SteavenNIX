@@ -72,13 +72,7 @@
       config.boot.kernelPackages.zenpower
       config.boot.kernelPackages.kvmfr
       (config.boot.kernelPackages.zenergy.overrideAttrs (old: {
-
         patches = (old.patches or []) ++ [ ./zenergy-pr17.patch ];
-
-        postPatch = ''
-        echo "✅ Patch applied to zenergy" >&2
-        grep rdmsrl_safe zenergy.c || echo "⚠️ Patch likely not effective" >&2
-        '';
         }))
         ];
 
