@@ -70,9 +70,17 @@
       config.boot.kernelPackages.ddcci-driver
       config.boot.kernelPackages.it87
       config.boot.kernelPackages.zenpower
-      config.boot.kernelPackages.zenergy
       config.boot.kernelPackages.kvmfr
-    ];
+      (config.boot.kernelPackages.zenergy.overrideAttrs (old: {
+
+        patches = (old.patches or []) ++ [ ./zenergy-pr17.patch ];
+
+        postPatch = ''
+        echo "✅ Patch applied to zenergy" >&2
+        grep rdmsrl_safe zenergy.c || echo "⚠️ Patch likely not effective" >&2
+        '';
+        }))
+        ];
 
     # Kernel configuration
     kernelPackages = pkgs.linuxPackages_cachyos;
