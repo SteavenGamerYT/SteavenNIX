@@ -1,8 +1,8 @@
---- a/drivers/gpu/drm/Kconfig    2025-04-28 02:17:36.835612668 +0300
-+++ b/drivers/gpu/drm/Kconfig    2025-04-28 02:18:29.968610257 +0300
-@@ -328,18 +328,8 @@
+--- a/drivers/gpu/drm/Kconfig	2025-07-28 00:26:38.000000000 +0300
++++ b/drivers/gpu/drm/Kconfig	2025-07-30 18:02:18.864934909 +0300
+@@ -267,20 +267,8 @@
  
- source "drivers/gpu/drm/i2c/Kconfig"
+ source "drivers/gpu/drm/sysfb/Kconfig"
  
 -source "drivers/gpu/drm/arm/Kconfig"
 -
@@ -11,6 +11,8 @@
  source "drivers/gpu/drm/amd/amdgpu/Kconfig"
  
 -source "drivers/gpu/drm/nouveau/Kconfig"
+-
+-source "drivers/gpu/drm/nova/Kconfig"
 -
 -source "drivers/gpu/drm/i915/Kconfig"
 -
