@@ -3,6 +3,7 @@
 let
   # Custom variables
   username = "omarhanykasban";
+  username2 = "rawanhanykasban";
   hostname = "Omar-GamingLaptop";
   timezone = "Africa/Cairo";
   locale = "en_US.UTF-8";
@@ -12,7 +13,7 @@ let
   ];
 
   # Sunshine configuration
-  SunshinePort = 6003;
+  SunshinePort = 6000;
 
   # Samba share configuration
   sambaShareName = "omar-gaminglaptop";
@@ -128,6 +129,18 @@ let
     kdePackages.okular
     baobab
     hyfetch
+
+    # Kde apps
+    kdePackages.discover # Optional: Install if you use Flatpak or fwupd firmware update sevice
+    kdePackages.kcalc # Calculator
+    kdePackages.kcharselect # Tool to select and copy special characters from all installed fonts
+    kdePackages.kcolorchooser # A small utility to select a color
+    kdePackages.kolourpaint # Easy-to-use paint program
+    kdePackages.ksystemlog # KDE SystemLog Application
+    kdiff3 # Compares and merges 2 or 3 files or directories
+    hardinfo2 # System information and benchmarks for Linux systems
+    haruna # Open source video player built with Qt/QML and libmpv
+    xclip # Tool to access the X clipboard from a console application
   ];
 in {
   imports = [
@@ -169,10 +182,32 @@ in {
     shell = pkgs.bash;
     home = "/home/${username}";
   };
+  users.users.${username2} = {
+    isNormalUser = true;
+    description = "RawanHanyKasban";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "libvirtd"
+      "kvm"
+      "libvirt"
+      "input"
+      "render"
+      "docker"
+      "scanner"
+      "lp"
+      "video"
+      "disk"
+    ];
+    shell = pkgs.bash;
+    home = "/home/${username2}";
+  };
 
   # System services
   systemd.coredump.enable = false;
   services = {
+    desktopManager.plasma6.enable = true;
     sunshine = {
       enable = true;
       autoStart = true;
@@ -211,6 +246,7 @@ in {
     xserver = {
       enable = true;
       displayManager = {
+        startx.enable = true;
         lightdm = {
           enable = false;
           greeters.gtk = {
@@ -565,7 +601,7 @@ in {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
-      trusted-users = [ "root" username ];
+      trusted-users = [ "root" username username2];
     };
     gc = {
       automatic = true;
