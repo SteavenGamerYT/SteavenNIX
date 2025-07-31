@@ -72,7 +72,7 @@
       config.boot.kernelPackages.zenpower
       config.boot.kernelPackages.kvmfr
       (config.boot.kernelPackages.zenergy.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [ ./zenergy-pr17.patch ];
+        patches = (old.patches or []) ++ [ ./zenergy-pr18.patch ];
         }))
         ];
 
