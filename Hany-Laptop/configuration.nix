@@ -13,7 +13,7 @@ let
   ];
 
   # Sunshine configuration
-  SunshinePort = 6000;
+  SunshinePort = 6004;
 
   # Samba share configuration
   sambaShareName = "hany-laptop";
