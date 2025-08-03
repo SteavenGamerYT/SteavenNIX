@@ -51,6 +51,7 @@ let
     gnumake
     cmake
     pkg-config
+    rustup
     
     # Security tools
     gnupg
