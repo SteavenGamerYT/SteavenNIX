@@ -290,6 +290,7 @@
     beep
     mesa-demos
     ryzenadj
+    nvtopPackages.amd
   ];
 
   systemd.packages = with pkgs; [ unstable.lact ];
