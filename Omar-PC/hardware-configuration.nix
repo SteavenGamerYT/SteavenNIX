@@ -164,6 +164,7 @@
       drives = [ "*" ];
     };
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    cpu.amd.ryzen-smu.enable = true;
     amdgpu = {
       opencl.enable = true;
     };
@@ -287,6 +288,7 @@
     ollama-rocm
     beep
     mesa-demos
+    ryzenadj
   ];
 
   systemd.packages = with pkgs; [ unstable.lact ];
@@ -310,4 +312,16 @@
     memoryPercent = 100;
     priority = 100;
   };
+
+  security.sudo.extraRules = [
+    {
+      users = [ "omarhanykasban" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/ryzenadj";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 }
